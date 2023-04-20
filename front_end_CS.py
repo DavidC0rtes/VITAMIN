@@ -487,7 +487,8 @@ def upload_file_handler():
   s0 s1 s2 s3
   Initial_State
   s0
-
+  peppia
+  
   """
   snippet_placeholder = st.empty()
 
