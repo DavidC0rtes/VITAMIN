@@ -446,6 +446,7 @@ def upload_file_handler():
   st.button('Upload Data')
   uploaded_file=st.file_uploader('Upload Dataset in .txt',type=['TXT'])
   s = None
+  filename = None
   if uploaded_file is not None:
     # st.write('hello world')
     with open('data/' + str(uploaded_file.name), 'w') as f:
