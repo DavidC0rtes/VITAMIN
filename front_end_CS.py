@@ -453,7 +453,7 @@ def upload_file_handler():
         bytes_data = uploaded_file.getvalue()
         # data = uploaded_file.getvalue().decode('utf-8').splitlines()
         st.write(bytes_data)
-        f.write(str(data))
+        f.write(str(bytes_data))
   else:
     filename=file_select()
     st.info('You selected {}'.format(filename))
