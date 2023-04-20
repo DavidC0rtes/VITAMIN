@@ -456,7 +456,10 @@ def display_case(nlp_steps):
 
     st.write("     ")
     st.markdown("Example of config file")
-    snippet = f"""
+    if s is not None:
+      snippet = s
+    else:
+      snippet = f"""
     Transition
     0 AC,AD BC,BD 0
     0 0 AD,BD AC,BC
