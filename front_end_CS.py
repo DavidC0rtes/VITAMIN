@@ -451,7 +451,7 @@ def display_case(nlp_steps):
     else:
       filename=file_select()
       st.info('You selected {}'.format(filename))
-      with open('data/test.txt', 'r') as f:
+      with open(str(filename), 'r') as f:
         s = f.read()
 
     st.write("     ")
