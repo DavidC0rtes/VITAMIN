@@ -1,6 +1,8 @@
 import streamlit as st
 from back_end_CS import *
 import os
+import os.path
+import pathlib
 
 
 
@@ -445,9 +447,14 @@ def display_case(nlp_steps):
     uploaded_file=st.file_uploader('Upload Dataset in .txt',type=['TXT'])
     if uploaded_file is not None:
       st.write('hello world')
-      with open('data/upload.txt', 'w') as f:
-          st.write(dir(uploaded_file))
-          f.write(str(uploaded_file))
+      data = uploaded_file.getvalue().decode('utf-8')
+      parent_path = pathlib.Path(__file__).parent.parent.resolve()
+      save_path = os.path.join(parent_path, "data")
+      complete_name = os.path.join(save_path, uploaded_file.name)
+      destination_file = open(complete_name, "w")
+      destination_file.write(data)
+      destination_file.close()
+      st.session_state["upload_state"] = "Saved " + complete_name + " successfully!"
     else:
       filename=file_select()
       st.info('You selected {}'.format(filename))
