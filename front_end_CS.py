@@ -463,7 +463,7 @@ def upload_file_handler():
   if filename:
     st.write(str(filename))
     game_strategy=game(load_file=True,path1=str(filename),AW=True)
-    st.write(game_strategy)
+    st.write(game_strategy.name_list)
     graph=game_strategy.display_diagram()
     st.write(str(graph))
     st.graphviz_chart(graph)
