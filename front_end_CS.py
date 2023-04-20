@@ -626,12 +626,12 @@ def display_MS(ms_steps):
       st.session_state.mat_transi=[]
       st.session_state.info_model[0][1]=len(st.session_state.info_model[0][0])
       D_printgraph()
+    # elif st.session_state.cmpt_model==5:
+    #   Na=len(st.session_state.info_model[0][0])
+    #   D_strategy(Na-st.session_state.info_model[0][1]-1,Na)
     elif st.session_state.cmpt_model==5:
-      Na=len(st.session_state.info_model[0][0])
-      D_strategy(Na-st.session_state.info_model[0][1]-1,Na)
-    elif st.session_state.cmpt_model==6:
       D_logic()
-    elif st.session_state.cmpt_model==7:
+    elif st.session_state.cmpt_model==6:
       D_parser()
 
     st.markdown("---")
