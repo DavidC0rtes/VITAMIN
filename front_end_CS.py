@@ -443,6 +443,7 @@ def display_case(nlp_steps):
     st.markdown("Upload Txt File with config")
     st.button('Upload Data')
     uploaded_file=st.file_uploader('Upload Dataset in .txt',type=['TXT'])
+    s = None
     if uploaded_file is not None:
       st.write('hello world')
       with open('data/VadimTifaInter.txt', 'w') as f:
