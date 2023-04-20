@@ -92,13 +92,14 @@ def main():
 
     index_review = 0
 
-    st.markdown(
-        """
-        [<img src='data:image/png;base64,{}' class='img-fluid' width=25 height=25>](https://github.com/hi-paris/agent-theory) <small> agent-theory 0.0.1 | September 2022</small>""".format(
-            img_to_bytes("./images/github.png")
-        ),
-        unsafe_allow_html=True,
-    )
+    # st.markdown(
+    #     """
+    #     [<img src='data:image/png;base64,{}' class='img-fluid' width=25 height=25>](https://github.com/hi-paris/agent-theory) <small> vitamin 0.0.1 | September 2022</small>""".format(
+    #         img_to_bytes("./images/github.png")
+    #     ),
+    #     unsafe_allow_html=True,
+    # )
+
     #Useful Session State
     if 'info_model' not in st.session_state:
       st.session_state.info_model=[]
@@ -108,17 +109,18 @@ def main():
       st.session_state.page=1
     st.sidebar.header("Dashboard")
     st.sidebar.markdown("---")
-    if st.sidebar.button('Cases Studies'):
-      st.session_state.page=1
-    if st.sidebar.button('Part for Devlopement '):
-      st.session_state.page=2
-      st.session_state.cmpt_model=-1
-      st.session_state.info_model_test=[]
     if st.sidebar.button('Model Cheking for MAS'):
       st.session_state.cmpt_model=0
       st.session_state.info_model=[]
       st.session_state.mat_transi=[]
       st.session_state.page=3
+    if st.sidebar.button('Cases Studies'):
+      st.session_state.page=1
+    if st.sidebar.button('Parser'):
+      st.session_state.page=2
+      st.session_state.cmpt_model=-1
+      st.session_state.info_model_test=[]
+    
     display_page(st.session_state.page)
 
     
