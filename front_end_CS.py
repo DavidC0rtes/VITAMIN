@@ -646,7 +646,7 @@ def display_MS(ms_steps):
 def D_agent():
   st.write(f"    ")
   st.write(f"    ")
-  Na=st.selectbox('Number of agent',['1','2','3','4'])
+  Na=st.selectbox('Number of agent',[str(i) for i in range(1, 15)])
   st.write(f"    ")
   List_name_agent=[]
   for id_agent in range(int(Na)):
@@ -661,7 +661,7 @@ def D_agent():
 
 
 def D_state():
-  NS=st.selectbox('Number of State',['1','2','3','4','5'])
+  NS=st.selectbox('Number of State',[str(i) for i in range(1, 15)])
   st.write("     ")
   List_name_state=[]
   for id_state in range(int(NS)):
