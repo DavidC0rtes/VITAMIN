@@ -451,8 +451,8 @@ def upload_file_handler():
     with open('data/' + str(uploaded_file.name), 'w') as f:
         # st.write(dir(uploaded_file))
         bytes_data = uploaded_file.getvalue()
-        data = uploaded_file.getvalue().decode('utf-8').splitlines()
-        st.write(data)
+        # data = uploaded_file.getvalue().decode('utf-8').splitlines()
+        st.write(bytes_data)
         f.write(str(data))
   else:
     filename=file_select()
@@ -463,7 +463,7 @@ def upload_file_handler():
   if filename:
     st.write(str(filename))
     game_strategy=game(load_file=True,path1=str(filename),AW=True)
-    st.write(game_strategy.name_list)
+    # st.write(game_strategy.name_list)
     graph=game_strategy.display_diagram()
     st.write(str(graph))
     st.graphviz_chart(graph)
