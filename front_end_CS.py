@@ -454,6 +454,8 @@ def upload_file_handler():
         data = uploaded_file.getvalue().decode('utf-8').splitlines()
         # data = uploaded_file.getvalue().decode('utf-8').splitlines()
         # st.write(bytes_data)
+        st.write(data)
+        st.write(type(data))
         for line in data:
             f.write(str(line) + '\n')
   else:
