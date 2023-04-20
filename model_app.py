@@ -23,7 +23,7 @@ st.set_page_config(
     page_title="Agent Theory", layout="wide", page_icon="images/flask.png"
 )
 
-### methods used within streamlit - to organize later on 
+### methods used within streamlit - to organize later on
 
 
 def img_to_bytes(img_path):
@@ -79,7 +79,7 @@ def main():
     st.markdown("# VITAMIN")
     st.subheader(
         """
-        VerIficaTion viA MultI ageNt system  
+        VerIficaTion viA MultI ageNt system
         """
     )
     st.markdown("     ")
@@ -106,7 +106,7 @@ def main():
     if 'cmpt_model' not in st.session_state:
       st.session_state.cmpt_model=0
     if 'page' not in st.session_state:
-      st.session_state.page=1
+      st.session_state.page=3
     st.sidebar.header("Dashboard")
     st.sidebar.markdown("---")
     if st.sidebar.button('Model Cheking for MAS'):
@@ -120,11 +120,11 @@ def main():
       st.session_state.page=2
       st.session_state.cmpt_model=-1
       st.session_state.info_model_test=[]
-    
+
     display_page(st.session_state.page)
 
-    
-    
+
+
 
 
 
@@ -217,6 +217,3 @@ def footer2():
 
 if __name__ == "__main__":
     footer2()
-
-
-
