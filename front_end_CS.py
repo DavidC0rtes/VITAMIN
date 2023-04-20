@@ -451,7 +451,7 @@ def upload_file_handler():
     # st.write('hello world')
     with open('data/' + str(uploaded_file.name), 'w') as f:
         # st.write(dir(uploaded_file))
-        bytes_data = uploaded_file.getvalue()
+        bytes_data = uploaded_file.getvalue().decode('utf-8')
         # data = uploaded_file.getvalue().decode('utf-8').splitlines()
         st.write(bytes_data)
         f.write(str(bytes_data))
