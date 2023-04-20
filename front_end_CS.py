@@ -426,64 +426,64 @@ def display_case(nlp_steps):
 
   ### 6
   if nlp_steps == '06 - Upload Configuration':
+    upload_file_handler()
 
-    def file_select(folder='./data'):
-        filelist=os.listdir(folder)
-        st.markdown("OR")
-        selectedfile=st.selectbox('Select a default dataset',filelist)
-        return os.path.join(folder,selectedfile)
-
-
-    st.markdown("---")
-    st.write(f"        ")
-
-    st.header('06 - Upload Configuration')
-    st.write(f"        ")
-    st.write(f"        ")
-    st.markdown("Upload Txt File with config")
-    st.button('Upload Data')
-    uploaded_file=st.file_uploader('Upload Dataset in .txt',type=['TXT'])
-    s = None
-    if uploaded_file is not None:
-      # st.write('hello world')
-      with open('data/VadimTifaInter.txt', 'w') as f:
-          # st.write(dir(uploaded_file))
-          bytes_data = uploaded_file.getvalue()
-          data = uploaded_file.getvalue().decode('utf-8').splitlines()
-          st.write(data)
-          f.write(str(data))
-    else:
-      filename=file_select()
-      st.info('You selected {}'.format(filename))
-      with open(str(filename), 'r') as f:
-        s = f.read()
-
-    st.write("     ")
-    st.markdown("Example of config file")
-    if s is not None:
-      snippet = s
-    else:
-      snippet = f"""
-    Transition
-    0 AC,AD BC,BD 0
-    0 0 AD,BD AC,BC
-    0 0 0 AD,BC
-    0 0 0 *
-    Name_State
-    s0 s1 s2 s3
-    Initial_State
-    s0
-
-    """
-    snippet_placeholder = st.empty()
-
-    st.write(f"        ")
-    st.write(f"        ")
-    snippet_placeholder.code(snippet)
-    st.write("     ")
-    st.markdown("---")
+def upload_file_handler():
+  def file_select(folder='./data'):
+      filelist=os.listdir(folder)
+      st.markdown("OR")
+      selectedfile=st.selectbox('Select a default dataset',filelist)
+      return os.path.join(folder,selectedfile)
 
 
+  st.markdown("---")
+  st.write(f"        ")
+
+  st.header('06 - Upload Configuration')
+  st.write(f"        ")
+  st.write(f"        ")
+  st.markdown("Upload Txt File with config")
+  st.button('Upload Data')
+  uploaded_file=st.file_uploader('Upload Dataset in .txt',type=['TXT'])
+  s = None
+  if uploaded_file is not None:
+    # st.write('hello world')
+    with open('data/VadimTifaInter.txt', 'w') as f:
+        # st.write(dir(uploaded_file))
+        bytes_data = uploaded_file.getvalue()
+        data = uploaded_file.getvalue().decode('utf-8').splitlines()
+        st.write(data)
+        f.write(str(data))
+  else:
+    filename=file_select()
+    st.info('You selected {}'.format(filename))
+    with open(str(filename), 'r') as f:
+      s = f.read()
+
+  st.write("     ")
+  st.markdown("Example of config file")
+  if s is not None:
+    snippet = s
+  else:
+    snippet = f"""
+  Transition
+  0 AC,AD BC,BD 0
+  0 0 AD,BD AC,BC
+  0 0 0 AD,BC
+  0 0 0 *
+  Name_State
+  s0 s1 s2 s3
+  Initial_State
+  s0
+
+  """
+  snippet_placeholder = st.empty()
+
+  st.write(f"        ")
+  st.write(f"        ")
+  snippet_placeholder.code(snippet)
+  st.write("     ")
+  st.markdown("---")
 
 
 
@@ -611,90 +611,35 @@ def display_MCMAS():
 
 
 def display_MS():
-  def file_select(folder='./data'):
-      filelist=os.listdir(folder)
-      st.markdown("OR")
-      selectedfile=st.selectbox('Select a default dataset',filelist)
-      return os.path.join(folder,selectedfile)
+  if ms_steps == "01 - Initialization":
+    if st.session_state.cmpt_model<=0:
+      D_agent()
+    elif st.session_state.cmpt_model==1:
+      D_state()
+    elif st.session_state.cmpt_model==2:
+      D_action()
+    elif st.session_state.cmpt_model==3:
+      Na=len(st.session_state.info_model[0][0])
+      D_transition(Na-st.session_state.info_model[0][1]-1,Na)
+    elif st.session_state.cmpt_model==4:
+      st.session_state.mat_transi=[]
+      st.session_state.info_model[0][1]=len(st.session_state.info_model[0][0])
+      D_printgraph()
+    elif st.session_state.cmpt_model==5:
+      Na=len(st.session_state.info_model[0][0])
+      D_strategy(Na-st.session_state.info_model[0][1]-1,Na)
+    elif st.session_state.cmpt_model==6:
+      D_logic()
+    elif st.session_state.cmpt_model==7:
+      D_parser()
 
-  st.markdown("---")
-  st.write(f"        ")
-
-  st.header('06 - Upload Configuration')
-  st.write(f"        ")
-  st.write(f"        ")
-  st.markdown("Upload Txt File with config")
-  st.button('Upload Data')
-  uploaded_file=st.file_uploader('Upload Dataset in .txt',type=['TXT'])
-  s = None
-  if uploaded_file is not None:
-    # st.write('hello world')
-    with open('data/VadimTifaInter.txt', 'w') as f:
-        # st.write(dir(uploaded_file))
-        bytes_data = uploaded_file.getvalue()
-        data = uploaded_file.getvalue().decode('utf-8').splitlines()
-        st.write(data)
-        f.write(str(data))
+    st.markdown("---")
+    st.write(f"    ")
+    st.header("Model design for User")
+    st.write(f"    ")
+    st.markdown("---")
   else:
-    filename=file_select()
-    st.info('You selected {}'.format(filename))
-    with open(str(filename), 'r') as f:
-      s = f.read()
 
-  st.write("     ")
-  st.markdown("Example of config file")
-  if s is not None:
-    snippet = s
-  else:
-    snippet = f"""
-  Transition
-  0 AC,AD BC,BD 0
-  0 0 AD,BD AC,BC
-  0 0 0 AD,BC
-  0 0 0 *
-  Name_State
-  s0 s1 s2 s3
-  Initial_State
-  s0
-
-  """
-  snippet_placeholder = st.empty()
-
-  st.write(f"        ")
-  st.write(f"        ")
-  snippet_placeholder.code(snippet)
-  st.write("     ")
-  st.markdown("---")
-  display_MS_aux()
-
-def display_MS_aux():
-  if st.session_state.cmpt_model<=0:
-    D_agent()
-  elif st.session_state.cmpt_model==1:
-    D_state()
-  elif st.session_state.cmpt_model==2:
-    D_action()
-
-  elif st.session_state.cmpt_model==3:
-    Na=len(st.session_state.info_model[0][0])
-    D_transition(Na-st.session_state.info_model[0][1]-1,Na)
-  elif st.session_state.cmpt_model==4:
-    st.session_state.mat_transi=[]
-    st.session_state.info_model[0][1]=len(st.session_state.info_model[0][0])
-    D_printgraph()
-  elif st.session_state.cmpt_model==5:
-    Na=len(st.session_state.info_model[0][0])
-    D_strategy(Na-st.session_state.info_model[0][1]-1,Na)
-  elif st.session_state.cmpt_model==6:
-    D_logic()
-  elif st.session_state.cmpt_model==7:
-    D_parser()
-
-  st.markdown("---")
-  st.write(f"    ")
-  st.header("Model design for User")
-  st.write(f"    ")
-  st.markdown("---")
 
 
 def D_agent():
