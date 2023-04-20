@@ -154,7 +154,7 @@ def display_case(nlp_steps):
 
     snippet = f"""
   def dining_crypt(ab="Head",ac="Tail",bc="Head",who_paid=[0,0,0]):
-  dining=game(3,["A","B","C"]) 
+  dining=game(3,["A","B","C"])
   ab=ab
   ac=ac
   bc=bc
@@ -222,9 +222,9 @@ def display_case(nlp_steps):
     st.text('''
     Impartial combinatorial games (ICGs)
 
-    Integration: We have to initialze three parameters: 
-    ActT1: T1's action, ="r" (right) or "l" (left) 
-    ActT2: T2's action, ="r" (right) or "s" (straight) or "l" (left) 
+    Integration: We have to initialze three parameters:
+    ActT1: T1's action, ="r" (right) or "l" (left)
+    ActT2: T2's action, ="r" (right) or "s" (straight) or "l" (left)
     ActC: Controller's action, ="e" or "a" or "o" (see description below)
     The blue connection are the state that cannot be distinguish for the agent in the label.
     The red node is the final state after all the actions
@@ -232,12 +232,12 @@ def display_case(nlp_steps):
     Two trains t1 and t2 pass through a crossroad. Due to agreements between the railway companies, train t1 can choose between the right (r) or left (l) track,
     while t2 can choose between the right (r), left (l) or straight (s) track.
     At the same time, controller c has to select the right combination of tracks. For example, if t1 and t2 choose the joint action r, then c has to select action 1 to proceed to the next step.
-    Moreover, train t1 has partial observability on the choices of t2. For instance, if t1 chooses l, then she cannot distinguish whether t2 selects r or s, but she would observe if t2 chose l as well. 
-    After this first step, c can still change her mind. Specifically, she can change arbitrarily the selection of tracks (e), request a new choice to the trains (a), or execute their selection (o). 
+    Moreover, train t1 has partial observability on the choices of t2. For instance, if t1 chooses l, then she cannot distinguish whether t2 selects r or s, but she would observe if t2 chose l as well.
+    After this first step, c can still change her mind. Specifically, she can change arbitrarily the selection of tracks (e), request a new choice to the trains (a), or execute their selection (o).
     The controller c has partial observability, she cannot distinguish between s2 and s3, i.e.
     she does not distinguish r and l of t1 when t2 selects l. Moreover, ∗ denotes any tuple of actions for which a transition is not given explicitly.''')
-    
-       
+
+
     st.write(f"        ")
     st.markdown('### ii Diagram Presentation')
     test=iCGS_train(boolean_Red=False)
@@ -264,7 +264,7 @@ def display_case(nlp_steps):
     cs5=st.selectbox('Action in s5',['e','a', 'o'])
     st.write('    ')
     cs6=st.selectbox('Action in s6',['e','a', 'o'])
-    
+
     t1_act,t2_act=t1_act[0],t2_act[0]
 
 
@@ -277,7 +277,7 @@ def display_case(nlp_steps):
       st.graphviz_chart(test)
 
 
-    
+
     code_header_placeholder = st.empty()
     snippet_placeholder = st.empty()
 
@@ -374,8 +374,8 @@ def display_case(nlp_steps):
     st.write(f"        ")
     st.markdown('#### i - Quick Introduction: ')
     st.text(''' This is an example of a game involving very simple states, but with a strategy system.   ''')
-    
-    
+
+
     st.write(f"        ")
     st.write(f"        ")
     st.markdown('#### ii - Strategy')
@@ -432,7 +432,7 @@ def display_case(nlp_steps):
         st.markdown("OR")
         selectedfile=st.selectbox('Select a default dataset',filelist)
         return os.path.join(folder,selectedfile)
-        
+
 
     st.markdown("---")
     st.write(f"        ")
@@ -445,6 +445,9 @@ def display_case(nlp_steps):
     uploaded_file=st.file_uploader('Upload Dataset in .txt',type=['TXT'])
     if uploaded_file is not None:
       st.write('hello world')
+      with open('data/upload.txt', 'w') as f:
+          st.write(dir(uploaded_file))
+          f.write(uploaded_file)
     else:
       filename=file_select()
       st.info('You selected {}'.format(filename))
@@ -535,7 +538,7 @@ def parser(formula):
         return not(cmpt)
     if not(verif_paranthese(cut_formula)):
         return False
-    
+
     cut_class=[]
     for obj in cut_formula:
         if obj in operatorDouble:
@@ -565,7 +568,7 @@ def parser(formula):
                     return False
         if (list_cut[-1]=='R' or list_cut[-1]=='D'):
             return False
-        return True     
+        return True
     return verif(cut_class),cut_formula,cut_class
 
 
@@ -609,7 +612,7 @@ def display_MS():
     D_state()
   elif st.session_state.cmpt_model==2:
     D_action()
-  
+
   elif st.session_state.cmpt_model==3:
     Na=len(st.session_state.info_model[0][0])
     D_transition(Na-st.session_state.info_model[0][1]-1,Na)
@@ -712,7 +715,7 @@ def Mat_to_Label():
     for stri in list_str:
       tmp1+=stri
     return tmp1
-  
+
   print(st.session_state.mat_transi)
   Mat=[]
   for s_in in range(len(st.session_state.info_model[1])):
@@ -802,5 +805,3 @@ def D_strategy(act_input,id_state1):
       st.session_state.info_model.append(st.session_state.mat_transi)
       print(st.session_state.info_model)
       st.experimental_rerun()
-
-
