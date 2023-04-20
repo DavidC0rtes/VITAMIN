@@ -460,6 +460,11 @@ def upload_file_handler():
     with open(str(filename), 'r') as f:
       s = f.read()
 
+  if filename:
+    game_strategy=game(load_file=True,path1=str(filename),AW=True)
+    graph=game_strategy.display_diagram(Special_node=SP)
+    st.graphviz_chart(graph)
+
   st.write("     ")
   st.markdown("Example of config file")
   if s is not None:
@@ -484,6 +489,7 @@ def upload_file_handler():
   snippet_placeholder.code(snippet)
   st.write("     ")
   st.markdown("---")
+
 
 
 
