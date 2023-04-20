@@ -641,6 +641,19 @@ def display_MS(ms_steps):
     st.markdown("---")
   else:
     upload_file_handler()
+    st.markdown('Logic Selection ')
+    Logic=st.selectbox('Selec your logic',['ATL','CTL','LTL','SL'])
+
+    st.write(f"    ")
+    st.write(f"    ")
+    formula=st.text_input('Write your formula',' ')
+    st.write("     ")
+    st.write('Your formula with the '+Logic+' logic is '+formula)
+    st.write("     ")
+    Verif,list_pars,list_type=parser(formula)
+    st.write(str(Verif))
+    st.write(str(list_pars))
+    st.write(str(list_type))
 
 
 def D_agent():
@@ -753,7 +766,7 @@ def D_printgraph():
 
 
 def D_logic():
-  st.header("Model Checking for MAS")
+  # st.header("Model Checking for MAS")
   st.write(f"    ")
   st.write(f"    ")
   st.markdown('Logic Selection ')
