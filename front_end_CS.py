@@ -661,7 +661,7 @@ def D_agent():
 
 
 def D_state():
-  NS=st.selectbox('Number of State',[str(i) for i in range(1, 15)])
+  NS=st.selectbox('Number of State',[str(i) for i in range(1, 25)])
   st.write("     ")
   List_name_state=[]
   for id_state in range(int(NS)):
@@ -674,7 +674,7 @@ def D_state():
     st.experimental_rerun()
 
 def D_action():
-  Nact=st.selectbox('Number of Action',['1','2','3','4','5','6','7'])
+  Nact=st.selectbox('Number of Action',[str(i) for i in range(1, 25)])
   Alphabet=['A','B','C','D','E','F','G']
   st.write("     ")
   List_name_action=['*','No Action']
