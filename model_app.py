@@ -37,7 +37,7 @@ def display_page(page):
   if page==2:
     display_MCMAS()
   elif page==3:
-    ms_steps = st.selectbox(' ', ['01 - Create MAS', '02 - Upload Configuration'])
+    ms_steps = st.selectbox(' ', ['01 - Create MAS', '02 - Upload File'])
     display_MS(ms_steps)
   else:
     nlp_steps = st.selectbox(' ', ['01 - Initialization',

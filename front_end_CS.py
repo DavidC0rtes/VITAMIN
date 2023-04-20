@@ -439,7 +439,7 @@ def upload_file_handler():
   st.markdown("---")
   st.write(f"        ")
 
-  st.header('06 - Upload Configuration')
+  st.header('06 - Upload File')
   st.write(f"        ")
   st.write(f"        ")
   st.markdown("Upload Txt File with config")
