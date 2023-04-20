@@ -619,6 +619,7 @@ def display_MS(ms_steps):
     elif st.session_state.cmpt_model==2:
       D_action()
     elif st.session_state.cmpt_model==3:
+      st.session_state.mat_transi=[]
       Na=len(st.session_state.info_model[0][0])
       D_transition(Na-st.session_state.info_model[0][1]-1,Na)
     elif st.session_state.cmpt_model==4:
