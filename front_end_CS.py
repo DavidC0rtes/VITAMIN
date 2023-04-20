@@ -746,7 +746,7 @@ def D_printgraph():
   st.markdown('#### iii - Diagram: ')
   test=display_graph_MS(st.session_state.info_model[3],st.session_state.info_model[0][0],st.session_state.info_model[1])
   st.graphviz_chart(test)
-  if st.button('Next : To Strategy'):
+  if st.button('Next : To Logic'):
     (st.session_state.info_model).append(test)
     st.session_state.cmpt_model=5
     st.experimental_rerun()
