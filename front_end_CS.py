@@ -457,7 +457,7 @@ def upload_file_handler():
         st.write(data)
         st.write(type(data))
         for line in data:
-            f.write(str(line) + '\n')
+            f.write(str(line[1]) + '\n')
   else:
     filename=file_select()
     st.info('You selected {}'.format(filename))
