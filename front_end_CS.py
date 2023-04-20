@@ -447,8 +447,10 @@ def display_case(nlp_steps):
       st.write('hello world')
       with open('data/VadimTifaInter.txt', 'w') as f:
           st.write(dir(uploaded_file))
-          st.write(uploaded_file.getValue())
-          f.write(str(uploaded_file))
+          bytes_data = uploaded_file.getvalue()
+          data = uploaded_file.getvalue().decode('utf-8').splitlines()
+          st.write(data)
+          f.write(str(data))
     else:
       filename=file_select()
       st.info('You selected {}'.format(filename))
