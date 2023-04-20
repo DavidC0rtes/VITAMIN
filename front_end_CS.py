@@ -610,7 +610,7 @@ def display_MCMAS():
     D_parser_test()
 
 
-def display_MS():
+def display_MS(ms_steps):
   if ms_steps == "01 - Initialization":
     if st.session_state.cmpt_model<=0:
       D_agent()
