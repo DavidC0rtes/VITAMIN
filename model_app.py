@@ -76,10 +76,10 @@ def main():
     # hide the footer
     hide_header_footer()
 
-    st.markdown("# VITAMIN 🔍 🖥")
+    st.markdown("# VITAMIN")
     st.subheader(
         """
-        VerIficaTion viA MultI ageNt system  🧪
+        VerIficaTion viA MultI ageNt system  
         """
     )
     st.markdown("     ")
@@ -131,22 +131,24 @@ if __name__=='__main__':
     main()
 
 st.markdown(" ")
-st.markdown("### ** 👨🏼‍💻 Télécom Paris Researcher: **")
-st.image(['images/1.png'], width=230,caption=["Vadim Malvone"])
+st.markdown("### ** 👨🏼‍💻 Developers and Researchers: **")
+st.image(['images/1.png'], width=110,caption=["Vadim Malvone"])
+st.image(['images/2.png'], width=110,caption=["Angelo Ferrando"])
 
-st.markdown('### Made by Hi!Paris')
+
+# st.image(images, width=250)
+# st.write('    ')
+# st.markdown('### Contributors:')
+
+st.markdown('### In collaboration with Hi!Paris')
 images = Image.open('./images/hi-paris.png')
-st.image(images, width=250)
-st.write('    ')
-st.markdown('### Contributors:')
 PA=Image.open('./images/PA.jpg')
 Pierre=Image.open('./images/Pierre.jpg')
 GAE=Image.open('./images/gaetan.png')
 st.image([PA,GAE,Pierre],width=110)
 
 
-
-st.markdown(f"####  Link to Project Website [here]({'https://github.com/hi-paris/agent-theory'}) 🚀 ")
+st.markdown(f"####  Link to Project Website [here]({'https://github.com/VadimMalvone/VITAMIN}) 🚀 ")
 
 
 
@@ -209,11 +211,7 @@ def layout(*args):
     st.markdown(str(foot), unsafe_allow_html=True)
 
 def footer2():
-    myargs = [
-        " Made by ",
-        link("https://engineeringteam.hi-paris.fr/", "Hi! PARIS Engineering Team"),
-        " 👩🏼‍💻 👨🏼‍💻"
-    ]
+    myargs = []
     layout(*myargs)
 
 
