@@ -463,14 +463,14 @@ def upload_file_handler():
     st.info('You selected {}'.format(filename))
     with open(str(filename), 'r') as f:
       s = f.read()
-
-  if filename:
-    st.write(str(filename))
-    game_strategy=game(load_file=True,path1=str(filename),AW=True)
-    # st.write(game_strategy.name_list)
-    graph=game_strategy.display_diagram()
-    st.write(str(graph))
-    st.graphviz_chart(graph)
+  #
+  # if filename:
+  #   st.write(str(filename))
+  #   game_strategy=game(load_file=True,path1=str(filename),AW=True)
+  #   # st.write(game_strategy.name_list)
+  #   graph=game_strategy.display_diagram()
+  #   st.write(str(graph))
+  #   st.graphviz_chart(graph)
 
   st.write("     ")
   st.markdown("Example of config file")
@@ -488,7 +488,7 @@ def upload_file_handler():
   Initial_State
   s0
   peppia
-  
+
   """
   snippet_placeholder = st.empty()
 
