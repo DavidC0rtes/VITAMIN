@@ -451,10 +451,11 @@ def upload_file_handler():
     # st.write('hello world')
     with open('data/' + str(uploaded_file.name), 'w') as f:
         # st.write(dir(uploaded_file))
-        bytes_data = uploaded_file.getvalue().decode('utf-8')
+        data = uploaded_file.getvalue().decode('utf-8').splitlines()
         # data = uploaded_file.getvalue().decode('utf-8').splitlines()
-        st.write(bytes_data)
-        f.write(str(bytes_data))
+        # st.write(bytes_data)
+        for line in data:
+            f.write(str(line) + '\n')
   else:
     filename=file_select()
     st.info('You selected {}'.format(filename))
