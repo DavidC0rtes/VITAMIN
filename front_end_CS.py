@@ -448,7 +448,7 @@ def upload_file_handler():
   s = None
   if uploaded_file is not None:
     # st.write('hello world')
-    with open('data/' + str(uploaded_file.name) + '.txt', 'w') as f:
+    with open('data/' + str(uploaded_file.name), 'w') as f:
         # st.write(dir(uploaded_file))
         bytes_data = uploaded_file.getvalue()
         data = uploaded_file.getvalue().decode('utf-8').splitlines()
