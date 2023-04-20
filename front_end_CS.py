@@ -445,9 +445,9 @@ def display_case(nlp_steps):
     uploaded_file=st.file_uploader('Upload Dataset in .txt',type=['TXT'])
     s = None
     if uploaded_file is not None:
-      st.write('hello world')
+      # st.write('hello world')
       with open('data/VadimTifaInter.txt', 'w') as f:
-          st.write(dir(uploaded_file))
+          # st.write(dir(uploaded_file))
           bytes_data = uploaded_file.getvalue()
           data = uploaded_file.getvalue().decode('utf-8').splitlines()
           st.write(data)
