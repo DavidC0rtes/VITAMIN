@@ -462,7 +462,7 @@ def upload_file_handler():
 
   if filename:
     game_strategy=game(load_file=True,path1=str(filename),AW=True)
-    graph=game_strategy.display_diagram(Special_node=0)
+    graph=game_strategy.display_diagram(Special_node=-1)
     st.graphviz_chart(graph)
 
   st.write("     ")
