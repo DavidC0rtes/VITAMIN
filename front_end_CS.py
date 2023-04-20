@@ -447,7 +447,7 @@ def display_case(nlp_steps):
       st.write('hello world')
       with open('data/upload.txt', 'w') as f:
           st.write(dir(uploaded_file))
-          f.write(uploaded_file)
+          f.write(str(uploaded_file))
     else:
       filename=file_select()
       st.info('You selected {}'.format(filename))
