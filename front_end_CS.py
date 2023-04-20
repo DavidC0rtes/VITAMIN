@@ -654,6 +654,10 @@ def display_MS(ms_steps):
     st.write(str(Verif))
     st.write(str(list_pars))
     st.write(str(list_type))
+    if st.button('Next : To Model Checking'):
+      (st.session_state.info_model).append([Logic,formula])
+      st.session_state.cmpt_model=7
+      st.experimental_rerun()
 
 
 def D_agent():
