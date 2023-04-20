@@ -639,7 +639,7 @@ def display_MS():
     st.write(f"    ")
     st.markdown("---")
   else:
-
+    upload_file_handler()
 
 
 def D_agent():
