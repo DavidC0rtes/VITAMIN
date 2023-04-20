@@ -454,8 +454,8 @@ def upload_file_handler():
         data = uploaded_file.getvalue().decode('utf-8').splitlines()
         # data = uploaded_file.getvalue().decode('utf-8').splitlines()
         # st.write(bytes_data)
-        st.write(data[1])
-        st.write(type(data))
+        # st.write(data[1])
+        # st.write(type(data))
         for line in data:
             f.write(str(line) + '\n')
   else:
@@ -464,13 +464,13 @@ def upload_file_handler():
     with open(str(filename), 'r') as f:
       s = f.read()
 
-  # if filename:
-  #   st.write(str(filename))
-  #   game_strategy=game(load_file=True,path1=str(filename),AW=True)
-  #   # st.write(game_strategy.name_list)
-  #   graph=game_strategy.display_diagram()
-  #   st.write(str(graph))
-  #   st.graphviz_chart(graph)
+  if filename:
+    st.write(str(filename))
+    game_strategy=game(load_file=True,path1=str(filename),AW=True)
+    # st.write(game_strategy.name_list)
+    graph=game_strategy.display_diagram()
+    st.write(str(graph))
+    st.graphviz_chart(graph)
 
   st.write("     ")
   st.markdown("Example of config file")
