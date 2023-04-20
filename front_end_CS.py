@@ -446,7 +446,8 @@ def display_case(nlp_steps):
     if uploaded_file is not None:
       st.write('hello world')
       with open('data/VadimTifaInter.txt', 'w') as f:
-          # st.write(dir(uploaded_file))
+          st.write(dir(uploaded_file))
+          st.write(uploaded_file)
           f.write(str(uploaded_file))
     else:
       filename=file_select()
