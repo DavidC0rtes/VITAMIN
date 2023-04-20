@@ -148,7 +148,7 @@ GAE=Image.open('./images/gaetan.png')
 st.image([PA,GAE,Pierre],width=110)
 
 
-st.markdown(f"####  Link to Project Website [here]({'https://github.com/VadimMalvone/VITAMIN}) 🚀 ")
+st.markdown(f"####  Link to Project Website [here]({'https://github.com/VadimMalvone/VITAMIN'}) 🚀 ")
 
 
 
