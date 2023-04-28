@@ -670,6 +670,7 @@ def display_MS(ms_steps):
     st.write(str(list_type))
     st.write('Selected file: ' + str(filename))
     with open(filename) as f:
+        st.write('Content:')
         st.write(f.readlines())
     if st.button('Next : To Model Checking'):
       # formula - we have the string literal of the input formula
