@@ -498,7 +498,7 @@ def upload_file_handler():
   st.write("     ")
   st.markdown("---")
 
-
+  return filename
 
 
 
@@ -654,7 +654,7 @@ def display_MS(ms_steps):
     st.write(f"    ")
     st.markdown("---")
   else:
-    upload_file_handler()
+    filename = upload_file_handler()
     st.markdown('Logic Selection ')
     Logic=st.selectbox('Selec your logic',['ATL','CTL','LTL','SL'])
 
@@ -668,7 +668,10 @@ def display_MS(ms_steps):
     st.write(str(Verif))
     st.write(str(list_pars))
     st.write(str(list_type))
+    st.write('Selected file: ' + str(filename))
     if st.button('Next : To Model Checking'):
+      # formula - we have the string literal of the input formula
+      # filename - the path to the model file
       (st.session_state.info_model).append([Logic,formula])
       st.session_state.cmpt_model=7
       st.experimental_rerun()
