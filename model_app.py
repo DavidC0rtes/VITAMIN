@@ -80,7 +80,7 @@ def main():
     st.markdown("# VITAMIN")
     st.subheader(
         """
-        VerIficaTion viA MultI ageNt system
+        VerIficaTion of A MultI ageNt system
         """
     )
     st.markdown("     ")
