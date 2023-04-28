@@ -671,10 +671,15 @@ def display_MS(ms_steps):
     st.write('Selected file: ' + str(filename))
     with open(filename) as f:
         st.write('Content:')
-        st.write(f.read())
+        content = f.read()
+        st.write(content)
+    for i in range(0, 1000000000000000000):
+        x = x+1
     if st.button('Next : To Model Checking'):
       # formula - we have the string literal of the input formula
       # filename - the path to the model file
+      # content - string denoting the content of the file
+      # model_checking(formula, content)
       (st.session_state.info_model).append([Logic,formula])
       st.session_state.cmpt_model=7
       st.experimental_rerun()
