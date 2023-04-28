@@ -673,9 +673,6 @@ def display_MS(ms_steps):
         st.write('Content:')
         content = f.read()
         st.write(content)
-    x = 0
-    for i in range(0, 1000000000000000000):
-        x = x+1
     if st.button('Next : To Model Checking'):
       # formula - we have the string literal of the input formula
       # filename - the path to the model file
