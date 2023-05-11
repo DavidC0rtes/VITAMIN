@@ -1,8 +1,11 @@
 import streamlit as st
+
+from logics.ATL import ATL
+from logics.ATLF import ATLF
 from back_end_CS import *
 import os
-
-
+from utilities.parser.ATL import *
+from utilities import *
 
 def display_case(nlp_steps):
 
@@ -502,7 +505,7 @@ def upload_file_handler():
 
 
 
-def D_parser_test():
+"""def D_parser_test():
   st.header("Parser")
   st.write(f"    ")
   print("logic")
@@ -521,7 +524,7 @@ def D_parser_test():
     print(parser)
     tree = parser.ltlExpr()
     visitor = YOUR_VISITOR_CLASS()
-    print(visitor.visit(tree))
+    print(visitor.visit(tree))"""
 
 
 
@@ -621,7 +624,8 @@ def display_MCMAS():
       st.session_state.cmpt_model=-2
       st.experimental_rerun()
   if st.session_state.cmpt_model==-2:
-    D_parser_test()
+    pass
+    #D_parser_test()
 
 
 def display_MS(ms_steps):
@@ -646,7 +650,8 @@ def display_MS(ms_steps):
     elif st.session_state.cmpt_model==5:
       D_logic()
     elif st.session_state.cmpt_model==6:
-      D_parser()
+      pass
+      #D_parser()
 
     st.markdown("---")
     st.write(f"    ")
@@ -656,31 +661,46 @@ def display_MS(ms_steps):
   else:
     filename = upload_file_handler()
     st.markdown('Logic Selection ')
-    Logic=st.selectbox('Selec your logic',['ATL','CTL','LTL','SL'])
+    Logic=st.selectbox('Selec your logic',['ATL','ATLF','CTL','LTL','SL'])
 
     st.write(f"    ")
     st.write(f"    ")
     formula=st.text_input('Write your formula',' ')
     st.write("     ")
-    st.write('Your formula with the '+Logic+' logic is '+formula)
-    st.write("     ")
-    Verif,list_pars,list_type=parser(formula)
+    #st.write('Your formula with the '+Logic+' logic is '+formula)
+    #st.write("     ")
+    """Verif,list_pars,list_type=parser(formula)
     st.write(str(Verif))
     st.write(str(list_pars))
-    st.write(str(list_type))
+    st.write(str(list_type))"""
+    read_input.read_file(filename) #provvisorio
+    res_parsing = do_parsing(formula, read_input.get_number_of_agents())
+    if formula == '':
+      st.write("please enter a formula")
+    """elif res_parsing == None:
+      res_parsing = "Syntax Error"""
+    st.write("Valid formula: " +str(res_parsing))
     st.write('Selected file: ' + str(filename))
     with open(filename) as f:
         st.write('Content:')
         content = f.read()
         st.write(content)
     if st.button('Next : To Model Checking'):
+      if Logic == 'ATL':
+        result = ATL.model_checking(formula, filename)
+        st.write(result['res'])
+        st.write(result['initial_state'])
+      elif Logic == 'ATLF':
+        result  = ATLF.model_checking(formula, filename)
+        st.write(result['res'])
+        st.write(result['initial_state'])
       # formula - we have the string literal of the input formula
       # filename - the path to the model file
       # content - string denoting the content of the file
       # model_checking(formula, content)
       (st.session_state.info_model).append([Logic,formula])
       st.session_state.cmpt_model=7
-      st.experimental_rerun()
+      #st.experimental_rerun() COMMENTATO ALTRIMENTI NON STAMPA RISULTATO
 
 
 def D_agent():
