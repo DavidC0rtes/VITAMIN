@@ -1,10 +1,12 @@
-from utilities import functions, read_input
+from utilities import functions
 from anytree import Node, RenderTree
+from utilities.functions import *
+from utilities.read_input import *
+
+graph = get_graph()
 
 
-graph = read_input.get_graph()
-
-
+# returns a tree, given the action and the tree set.
 def get_coalition_tree(action_coalition, trees):
     for t in trees:
         if t.name == action_coalition:
@@ -18,33 +20,33 @@ def print_tree(tree):
 
 
 def build_node(strategy, state, parent):
-    node = [state, parent + strategy]
+    node = [state, str(strategy)]
     return node
 
-
+# returns the atom value in a given state
 def get_atom_value(atom_values, state):
     for elem in atom_values:
         if elem[0] == state:
             return elem[1]
 
 
-def create_next_move_trees(coalition, state):
+# returns a set of trees, one for each action. They represent the next possible move.
+def create_next_move_trees(agents, state):
     destination = 0
-    graph = read_input.get_graph()
+    graph = get_graph()
+
     # transitions from a state
     index_state = functions.get_index_by_state_name(state)
     trees = []
-
     for action in graph[index_state]:
         if action != 0:
             action = functions.build_list(action)
-
             for move in action:
-                coalition_move = move[coalition - 1]
+                coalition_move = get_coalition_action(set([move]), agents)
 
                 # create a tree for each action
                 t = get_coalition_tree(coalition_move, trees)
-                opponent_move = move[:coalition - 1] + move[coalition:]
+                opponent_move = get_opponent_moves(action, agents)
 
                 if t is None:
                     tree = Node(coalition_move)
@@ -62,11 +64,12 @@ def create_next_move_trees(coalition, state):
     return trees
 
 
-def evaluate_max_strategy(coalition, state, atom_values):  # returns max(min(t1, t2, t3...))
+# evaluates max(min(t1, t2, t3...))
+def evaluate_max_strategy(agents, state, atom_values):
 
     # builds the strategy tree and then calculates the minimum value
     min_values_tree = []
-    trees = create_next_move_trees(coalition, state)
+    trees = create_next_move_trees(agents, state)
 
     for el in trees:
         children = el.children
@@ -80,14 +83,16 @@ def evaluate_max_strategy(coalition, state, atom_values):  # returns max(min(t1,
 
     return max(min_values_tree)
 
-
+# It returns the states from which the coalition has a strategy to enforce the next state to lie in state_set.
+# function used by the model checker.
 def pre(coalition, atom_values):
     # pre for each state
-    states = read_input.get_states()
+    agents = get_agents_from_coalition(coalition)
+    states = get_states()
     result = []
     for state in states:
         # coalition strategy from state
-        max_value = evaluate_max_strategy(coalition, state, atom_values)
+        max_value = evaluate_max_strategy(agents, state, atom_values)
         # put value in the state tuple
         tuple = (state, max_value)
         result.append(tuple)

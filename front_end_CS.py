@@ -1,3 +1,5 @@
+import time
+
 import streamlit as st
 
 from logics.ATL import ATL
@@ -628,6 +630,7 @@ def display_MCMAS():
     #D_parser_test()
 
 
+
 def display_MS(ms_steps):
   if ms_steps == "01 - Create MAS":
     if st.session_state.cmpt_model<=0:
@@ -662,7 +665,6 @@ def display_MS(ms_steps):
     filename = upload_file_handler()
     st.markdown('Logic Selection ')
     Logic=st.selectbox('Selec your logic',['ATL','ATLF','CTL','LTL','SL'])
-
     st.write(f"    ")
     st.write(f"    ")
     formula=st.text_input('Write your formula',' ')
@@ -673,19 +675,21 @@ def display_MS(ms_steps):
     st.write(str(Verif))
     st.write(str(list_pars))
     st.write(str(list_type))"""
-    read_input.read_file(filename) #provvisorio
+
+    read_input.read_file(filename) 
     res_parsing = do_parsing(formula, read_input.get_number_of_agents())
+
     if formula == '':
       st.write("please enter a formula")
-    """elif res_parsing == None:
-      res_parsing = "Syntax Error"""
     st.write("Valid formula: " +str(res_parsing))
     st.write('Selected file: ' + str(filename))
     with open(filename) as f:
         st.write('Content:')
         content = f.read()
         st.write(content)
+    start_time = None
     if st.button('Next : To Model Checking'):
+      start_time = time.time()
       if Logic == 'ATL':
         result = ATL.model_checking(formula, filename)
         st.write(result['res'])
@@ -694,13 +698,16 @@ def display_MS(ms_steps):
         result  = ATLF.model_checking(formula, filename)
         st.write(result['res'])
         st.write(result['initial_state'])
+      elapsed_time = time.time() - start_time
+      st.write("Execution time:", format_time(elapsed_time))
+      start_time = None
       # formula - we have the string literal of the input formula
       # filename - the path to the model file
       # content - string denoting the content of the file
       # model_checking(formula, content)
       (st.session_state.info_model).append([Logic,formula])
       st.session_state.cmpt_model=7
-      #st.experimental_rerun() COMMENTATO ALTRIMENTI NON STAMPA RISULTATO
+      #st.experimental_rerun()
 
 
 def D_agent():
@@ -873,3 +880,13 @@ def D_strategy(act_input,id_state1):
       st.session_state.info_model.append(st.session_state.mat_transi)
       print(st.session_state.info_model)
       st.experimental_rerun()
+
+
+
+# timer (time elapsed)
+def format_time(seconds):
+  milliseconds = int(seconds * 1000) % 1000
+  return f"{int(seconds):02d}.{milliseconds:03d}"
+
+
+
