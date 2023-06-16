@@ -119,3 +119,4 @@ websocket-client==1.4.1
 zipp==3.8.1
 binarytree===6.5.1
 ply==3.11
+anytree==2.8.0
