@@ -49,6 +49,7 @@ In this section the user has the ability to check whether a sequence of logical 
 
 The text file given in input is a TXT file with the following attributes:
 - Transition: a matrix where row and columns denote the transitions involved in the MAS.
+- Unknown_by: a matrix where the indistinguishability relations are defined (it is optional).  
 - Name_State: a list of states that follows the same order of the transition matrix (i.e., the i-th element represents the i-th row and i-th column in the matrix).
 - Initial_State: the unique initial state of the MAS.
 - Atomic_propositions: a list of atomic propositions used in the MAS.
