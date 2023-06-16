@@ -48,11 +48,11 @@ In this section the user has the ability to check whether a sequence of logical 
 ## Input Model
 
 The text file given in input is a TXT file with the following attributes:
-- Transition: A matrix where row and columns denote the transitions involved in the MAS.
-- Name_State: A list of states that follows the same order of the matrix (i.e., the ith element represents the ith row and ith column in the matrix)
-- Initial_State: The unique initial state of the MAS.
-- Atomic_propositions: A list of atomic propositions used in the MAS.
-- Labelling: A matrix where the rows represent the states, while the columns represent the atomic propositions. Also in this case the columns are ordered with respect to the atomic propositions (i.e., the ith atomic proposition is denoted by the ith column in the labelling).
-- Number_of_agents: The number of agents in the MAS.
+- Transition: a matrix where row and columns denote the transitions involved in the MAS.
+- Name_State: a list of states that follows the same order of the transition matrix (i.e., the i-th element represents the i-th row and i-th column in the matrix).
+- Initial_State: the unique initial state of the MAS.
+- Atomic_propositions: a list of atomic propositions used in the MAS.
+- Labelling: a matrix where the rows represent the states, while the columns represent the atomic propositions. Also in this case the columns are ordered w.r.t. the atomic propositions (i.e., the i-th atomic proposition truth values can be derived by the i-th column in the labelling matrix).
+- Number_of_agents: the number of agents in the MAS.
 
 
