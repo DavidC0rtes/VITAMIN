@@ -12,15 +12,6 @@ Transition
 0 0 0 0 0 0 0 0 0 0 * 0 0
 0 0 0 0 0 0 0 0 0 0 0 * 0
 0 0 0 0 0 0 0 0 0 0 0 0 *
-Unkown_Transition_by
-0 0 0 0 0 0 0 0
-0 0 t1 0 0 0 0 0
-0 0 0 c 0 0 0 0
-0 0 0 0 0 0 0 0
-0 0 0 0 0 t1 0 0
-0 0 0 0 0 0 0 0
-0 0 0 0 0 0 0 0
-0 0 0 0 0 0 0 0
 Name_State
 s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 tie winK winT
 Initial_State
