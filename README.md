@@ -33,4 +33,4 @@ To do so, first the "Browse files" button needs to be pressed. This allows you t
 
 Once the file has been uploaded, in the "Logic Selection" section, you can type the logical formula to verify.
 
-To perform the model checking of the model w.r.t. to the typed formula, you can press the "Next: To Model Checking" button. This will execute the model checker.
+To perform the model checking of the model w.r.t. the typed formula, you can press the "Next: To Model Checking" button. This will execute the model checker.
