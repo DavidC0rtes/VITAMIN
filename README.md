@@ -12,3 +12,7 @@ Then, VITAMIN applies the corresponding model checking algorithm for the chosen 
 
 Currently, VITAMIN supports Concurrent Game Structures (CGSs) as models, and CTL, ATL, and ATLF as specifications. 
 The CGS consists of states of the MAS and transitions that are labeled with actions taken by each agent. 
+
+## How to use
+
+VITAMIN can be accessed at the following link: https://vitamin.streamlit.app/
