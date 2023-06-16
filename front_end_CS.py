@@ -684,9 +684,9 @@ def display_MS(ms_steps):
     st.write("Valid formula: " +str(res_parsing))
     st.write('Selected file: ' + str(filename))
     with open(filename) as f:
-        st.write('Content:')
+        # st.write('Content:')
         content = f.read()
-        st.write(content)
+        # st.write(content)
     start_time = None
     if st.button('Next : To Model Checking'):
       start_time = time.time()
