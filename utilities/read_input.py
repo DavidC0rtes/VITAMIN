@@ -24,7 +24,7 @@ def read_file(filename):
     atomic_propositions = []
     matrix_prop = []
     initial_state = ''
-    number_of_agents = ''
+    number_of_agents = '0'
 
     current_section = None
     transition_content = ''
