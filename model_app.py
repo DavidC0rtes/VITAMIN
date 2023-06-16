@@ -115,7 +115,7 @@ def main():
       st.session_state.info_model=[]
       st.session_state.mat_transi=[]
       st.session_state.page=3
-    if st.sidebar.button('Cases Studies'):
+    if st.sidebar.button('Case Studies'):
       st.session_state.page=1
     if st.sidebar.button('Parser'):
       st.session_state.page=2

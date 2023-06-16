@@ -16,3 +16,21 @@ The CGS consists of states of the MAS and transitions that are labeled with acti
 ## How to use
 
 VITAMIN can be accessed at the following link: https://vitamin.streamlit.app/
+
+In the dashboard (on the left side), you can find three options:
+- Model Checking for MAS
+- Case Studies
+- Parser
+
+## Model Checking for MAS
+
+There are two options:
+- Create MAS
+- Upload File
+
+If the latter is selected, then a text file describing the model (i.e., the MAS) can be uploaded. 
+To do so, first the "Browse files" button needs to be pressed. This allows you to select the text file to upload. After that, the "Upload Data" button can be pressed. This will perform the actual upload of the file.
+
+Once the file has been uploaded, in the "Logic Selection" section, you can type the logical formula to verify.
+
+To perform the model checking of the model w.r.t. to the typed formula, you can press the "Next: To Model Checking" button. This will execute the model checker.

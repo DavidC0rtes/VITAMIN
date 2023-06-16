@@ -609,7 +609,7 @@ def display_MCMAS():
     st.write(f"    ")
     st.write(f"    ")
     st.markdown('Logic Selection ')
-    Logic=st.selectbox('Selec your logic',['ATL','CTL','LTL','SL'])
+    Logic=st.selectbox('Select your logic',['ATL','CTL','LTL','SL'])
     st.write(f"    ")
     st.write(f"    ")
     formula=st.text_input('Write your formula',' ')
@@ -664,7 +664,7 @@ def display_MS(ms_steps):
   else:
     filename = upload_file_handler()
     st.markdown('Logic Selection ')
-    Logic=st.selectbox('Selec your logic',['ATL','ATLF','CTL','LTL','SL'])
+    Logic=st.selectbox('Select your logic',['ATL','ATLF','CTL','LTL','SL'])
     st.write(f"    ")
     st.write(f"    ")
     formula=st.text_input('Write your formula',' ')
@@ -824,7 +824,7 @@ def D_logic():
   st.write(f"    ")
   st.write(f"    ")
   st.markdown('Logic Selection ')
-  Logic=st.selectbox('Selec your logic',['ATL','CTL','LTL','SL'])
+  Logic=st.selectbox('Select your logic',['ATL','CTL','LTL','SL'])
 
   st.write(f"    ")
   st.write(f"    ")
