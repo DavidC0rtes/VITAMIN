@@ -1,4 +1,4 @@
-# VITAMIN
+#VITAMIN
 
 VITAMIN is an open-source model checker tailored to the verification of Multi-Agent Systems (MAS). MAS descriptions are given by means of labelled transition systems.
 VITAMIN supports a set of specifications, including Computation Tree Logic (CTL) and Alternating-time Temporal Logic (ATL) operators. 
