@@ -1,7 +1,7 @@
 from utilities.read_input import *
 import itertools
 from itertools import combinations, permutations
-from classes import *
+from logics.CapATL.classes import *
 
 
 ##########################################################

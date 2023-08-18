@@ -1,4 +1,4 @@
-from functions import *
+from logics.CapATL.functions import *
 
 # returns possible actions given a set of capacities i.e. [('c','c','c1'),('c', 'c', 'c2')]
 # it can corresponds to a knowledge delta
