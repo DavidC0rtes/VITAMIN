@@ -1,4 +1,4 @@
-from fonction_F import *
+from function_F import *
 from itertools import combinations
 from functions import *
 from pre import *
@@ -297,7 +297,7 @@ def verify_initial_state(initial_state, string):
     return False
 
 def model_checking(formula, filename) :
-    
+
     if not formula.strip():
         result = {'res': 'Error: formula not entered', 'initial_state': ''}
         return result
