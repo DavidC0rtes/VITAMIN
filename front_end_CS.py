@@ -4,6 +4,7 @@ import streamlit as st
 
 from logics.ATL import ATL
 from logics.ATLF import ATLF
+from logics.CapATL import CapATL
 from back_end_CS import *
 import os
 from utilities.parser.ATL import *
