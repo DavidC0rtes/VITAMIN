@@ -295,10 +295,11 @@ def verify_initial_state(initial_state, string):
     return False
 
 def model_checking(formula, filename) :
-
+    debug = ''
     if not formula.strip():
         result = {'res': 'Error: formula not entered', 'initial_state': ''}
         return result
+
     # model parsing
     read_file(filename)
 
@@ -314,8 +315,9 @@ def model_checking(formula, filename) :
         result = {'res': "Syntax Error", 'initial_state': ''}
         print(result)
         return result
-    
+
     root = build_tree(res_parsing)
+    debug += 'root : ' + str(root) + '\n'
     if root is None:
         result = {'res': "Syntax Error: the atom does not exist", 'initial_state': ''}
         print(result)
@@ -325,11 +327,13 @@ def model_checking(formula, filename) :
     solve_tree(root)
     state = []
     for elem in root.value : 
+        debug += 'elem : ' + str(elem) + '\n'
         # elem.print_p_knowledge()
         k = 0
         for know in getattr(elem, 'knowledge') :
+            debug += 'know : ' + str(know) + '\n'
             if know == tuple(X_agt_cap2()) : 
-                k +=1 
+                k +=1        
         if k == get_number_of_agents() and getattr(elem, 'state') not in state:
             state.append(getattr(elem, 'state'))
     # print(state)
@@ -337,7 +341,7 @@ def model_checking(formula, filename) :
     # # solution
     # initial_state = get_initial_state()
     # bool_res = verify_initial_state(initial_state, root.value)
-    result = {'res': 'Result: ' + str(state) }
+    result = {'res': 'Result: ' + debug}
 
     return result
 
