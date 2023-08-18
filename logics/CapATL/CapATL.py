@@ -3,8 +3,7 @@ from itertools import combinations
 from functions import *
 from pre import *
 from utilities.parser.CapATL import *
-from classes import * 
-
+from classes import *
 
 def verifier_chiffres_et_lettres(liste):
     a_des_chiffres = False
