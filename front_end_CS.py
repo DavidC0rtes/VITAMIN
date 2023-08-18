@@ -697,7 +697,7 @@ def display_MS(ms_steps):
         st.write(result['initial_state'])
       elif Logic == 'CapATL':
         result = CapATL.model_checking(formula, filename)
-        st.write(result['res'])
+        st.write(result)
         # st.write(result['initial_state'])
       elif Logic == 'ATLF':
         result  = ATLF.model_checking(formula, filename)
