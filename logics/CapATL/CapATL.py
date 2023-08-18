@@ -334,6 +334,7 @@ def model_checking(formula, filename) :
             debug += 'know : ' + str(know) + '\n'
             if know == tuple(X_agt_cap2()) : 
                 k +=1        
+        debug += 'k : ' + str(k) + '\n'
         if k == get_number_of_agents() and getattr(elem, 'state') not in state:
             state.append(getattr(elem, 'state'))
     # print(state)
