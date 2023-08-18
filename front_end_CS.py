@@ -609,7 +609,7 @@ def display_MCMAS():
     st.write(f"    ")
     st.write(f"    ")
     st.markdown('Logic Selection ')
-    Logic=st.selectbox('Select your logic',['ATL','CTL','LTL','SL'])
+    Logic=st.selectbox('Select your logic',['ATL','CTL','LTL','SL','CapATL'])
     st.write(f"    ")
     st.write(f"    ")
     formula=st.text_input('Write your formula',' ')
@@ -664,7 +664,7 @@ def display_MS(ms_steps):
   else:
     filename = upload_file_handler()
     st.markdown('Logic Selection ')
-    Logic=st.selectbox('Select your logic',['ATL','ATLF','CTL','LTL','SL'])
+    Logic=st.selectbox('Select your logic',['ATL','ATLF','CTL','LTL','SL','CapATL'])
     st.write(f"    ")
     st.write(f"    ")
     formula=st.text_input('Write your formula',' ')
@@ -692,6 +692,10 @@ def display_MS(ms_steps):
       start_time = time.time()
       if Logic == 'ATL':
         result = ATL.model_checking(formula, filename)
+        st.write(result['res'])
+        st.write(result['initial_state'])
+      elif Logic == 'CapATL':
+        result = CapATL.model_checking(formula, filename)
         st.write(result['res'])
         st.write(result['initial_state'])
       elif Logic == 'ATLF':
