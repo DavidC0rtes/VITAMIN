@@ -1,8 +1,8 @@
 from itertools import combinations
-from functions import *
-from pre import *
+from logics.CapATL.functions import *
+from logics.CapATL.pre import *
 from utilities.parser.CapATL import *
-from classes import *
+from logics.CapATL.classes import *
 
 def verifier_chiffres_et_lettres(liste):
     a_des_chiffres = False
