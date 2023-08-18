@@ -343,9 +343,9 @@ def model_checking(formula, filename) :
     # # solution
     # initial_state = get_initial_state()
     # bool_res = verify_initial_state(initial_state, root.value)
-    # result = {'res': 'Result: ' + debug}
+    result = {'res': 'Result: ' + formula}
 
-    return state
+    return result
 
 
 
