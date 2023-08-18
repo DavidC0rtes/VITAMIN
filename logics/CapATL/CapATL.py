@@ -1,4 +1,3 @@
-from function_F import *
 from itertools import combinations
 from functions import *
 from pre import *
