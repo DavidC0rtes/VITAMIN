@@ -332,16 +332,14 @@ def model_checking(formula, filename) :
                 k +=1 
         if k == get_number_of_agents() and getattr(elem, 'state') not in state:
             state.append(getattr(elem, 'state'))
-    print(state)
+    # print(state)
     # print(root.value)
     # # solution
-    # # initial_state = get_initial_state()
-    # # bool_res = verify_initial_state(initial_state, root.value)
-    # # result = {'res': 'Result: ' + str(root.value), 'initial_state': 'Initial state '+ str(initial_state) + ": " + str(bool_res)}
-    
-    # print(state)
+    # initial_state = get_initial_state()
+    # bool_res = verify_initial_state(initial_state, root.value)
+    result = {'res': 'Result: ' + str(state) }
 
-    return 
+    return result
 
 
 
