@@ -332,6 +332,7 @@ def model_checking(formula, filename) :
         k = 0
         for know in getattr(elem, 'knowledge') :
             debug += 'know : ' + str(know) + '\n'
+            debug += 'know : ' + str(tuple(X_agt_cap2())) + '\n'
             if know == tuple(X_agt_cap2()) : 
                 k +=1        
         debug += 'k : ' + str(k) + '\n'
@@ -342,9 +343,9 @@ def model_checking(formula, filename) :
     # # solution
     # initial_state = get_initial_state()
     # bool_res = verify_initial_state(initial_state, root.value)
-    result = {'res': 'Result: ' + debug}
+    # result = {'res': 'Result: ' + debug}
 
-    return result
+    return state
 
 
 
