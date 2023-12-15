@@ -5,6 +5,8 @@ import streamlit as st
 from logics.ATL import ATL
 from logics.ATLF import ATLF
 from logics.CapATL import CapATL
+from logics.OL import OL
+from logics.OL import OATL
 from back_end_CS import *
 import os
 from utilities.parser.ATL import *
@@ -610,7 +612,7 @@ def display_MCMAS():
     st.write(f"    ")
     st.write(f"    ")
     st.markdown('Logic Selection ')
-    Logic=st.selectbox('Select your logic',['ATL','CTL','LTL','SL','CapATL'])
+    Logic=st.selectbox('Select your logic',['ATL','CTL','LTL','SL','CapATL', 'OL', 'OATL'])
     st.write(f"    ")
     st.write(f"    ")
     formula=st.text_input('Write your formula',' ')
@@ -665,7 +667,7 @@ def display_MS(ms_steps):
   else:
     filename = upload_file_handler()
     st.markdown('Logic Selection ')
-    Logic=st.selectbox('Select your logic',['ATL','ATLF','CTL','LTL','SL','CapATL'])
+    Logic=st.selectbox('Select your logic',['ATL','ATLF','CTL','LTL','SL','CapATL', 'OL', 'OATL'])
     st.write(f"    ")
     st.write(f"    ")
     formula=st.text_input('Write your formula',' ')
@@ -701,6 +703,13 @@ def display_MS(ms_steps):
         # st.write(result['initial_state'])
       elif Logic == 'ATLF':
         result  = ATLF.model_checking(formula, filename)
+        st.write(result['res'])
+        st.write(result['initial_state'])
+      elif Logic == 'OL':
+        result  = OL.model_checking(formula, filename)
+        st.write(result['res'])
+      elif Logic == 'OATL':
+        result  = OATL.model_checking(formula, filename)
         st.write(result['res'])
         st.write(result['initial_state'])
       elapsed_time = time.time() - start_time
