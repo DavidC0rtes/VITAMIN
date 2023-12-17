@@ -62,6 +62,10 @@ def build_tree(tpl):
                 root.right = right_child
     else:
         states = set()
+        if (verify('FALSE', str(tpl))):
+            return Node(str(states))
+        elif (verify('TRUE', str(tpl))):
+            return Node(str(set(get_states())))
         states_proposition = get_states_prop_holds(str(tpl))
         if states_proposition is None:
             return None
@@ -247,8 +251,6 @@ def solve_tree(node):
             not_states1 = set(get_states()).difference(states1)
             ris = not_states1.union(states2)
             node.value = str(ris)
-        elif verify('FALSE', node.value)
-            node.value = str(set())
             
 def solve_tree_adjacency_list(node):
     if node.left is not None:
@@ -374,8 +376,6 @@ def model_checking(formula, filename):
     solve_tree(root)
 
     # solution
-    print(root)
-    print(root.value)
     result = {'res': 'Result: ' + str(root.value)}
     return result
     

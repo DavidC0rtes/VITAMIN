@@ -16,6 +16,8 @@ tokens = (
     'GLOBALLY',
     'NEXT',
     'EVENTUALLY',
+    'FALSE',
+    'TRUE',
     'PROP',
     'DEMONIC'
 )
@@ -33,6 +35,8 @@ t_WEAK = r'W|weak'
 t_GLOBALLY = r'G|globally|always'
 t_NEXT = r'X|next'
 t_EVENTUALLY = r'F|eventually'
+t_FALSE = r'\#|false'
+t_TRUE = r'\@|true'
 t_PROP = r'[a-z]+'
 t_DEMONIC = r'<J[1-9]\d*>'
 
@@ -82,6 +86,11 @@ def p_expression_not(p):
 def p_expression_group(p):
     '''expression : LPAREN expression RPAREN'''
     p[0] = p[2]
+
+def p_expression_boolean(p):
+    '''expression : FALSE 
+                  | TRUE'''
+    p[0] = p[1]
 
 
 def p_expression_prop(p):
