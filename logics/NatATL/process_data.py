@@ -1,4 +1,4 @@
-from strategies import initialize, generate_strategies
+from logics.NatATL.strategies import initialize, generate_strategies
 from pruning import pruning
 import time
 
