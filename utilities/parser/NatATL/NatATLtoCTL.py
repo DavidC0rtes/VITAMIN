@@ -1,4 +1,4 @@
-from CTLparser import *
+from utilities.parser.NatATL.CTLparser import *
 import re
 
 def natatl_to_ctl(natatl_formula): #transform a NatATL formula into a CTL formula (using "FORALL" path quantifier)
