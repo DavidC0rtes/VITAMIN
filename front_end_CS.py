@@ -708,6 +708,8 @@ def display_MS(ms_steps):
         st.write(result['initial_state'])
       elif Logic == 'OL':
         st.write('here!')
+        st.write(formula)
+        st.write(filename)
         result  = OL.model_checking(formula, filename)
         st.write(result['res'])
       elif Logic == 'OATL':
