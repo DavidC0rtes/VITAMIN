@@ -1,4 +1,4 @@
-from modelCheckingCTL import model_checking, process_modelCheckingCTL
+from logics.NatATL.modelCheckingCTL import model_checking, process_modelCheckingCTL
 from utilities.read_input import read_file,get_graph, get_actions, get_states, get_number_of_agents, write_updated_file
 from utilities.functions import create_label_matrix
 from utilities.parser.NatATL.matrixParser import matrixParser
