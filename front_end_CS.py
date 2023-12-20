@@ -6,7 +6,7 @@ from logics.ATL import ATL
 from logics.ATLF import ATLF
 from logics.CapATL import CapATL
 from logics.OL import OL
-from logics.OL import OATL
+from logics.OATL import OATL
 from back_end_CS import *
 import os
 from utilities.parser.ATL import *
