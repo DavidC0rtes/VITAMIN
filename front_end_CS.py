@@ -707,9 +707,7 @@ def display_MS(ms_steps):
         st.write(result['res'])
         st.write(result['initial_state'])
       elif Logic == 'OL':
-        st.write('here!')
-        st.write(formula)
-        st.write(filename)
+        formula = '(<J3> G ((!r) | (r > (<J3> F a)))) & (<J5> (!r) W a)'
         result  = OL.model_checking(formula, filename)
         st.write(result['res'])
       elif Logic == 'OATL':
