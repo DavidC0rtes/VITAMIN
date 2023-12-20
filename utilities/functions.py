@@ -88,3 +88,15 @@ def get_opponent_moves(actions, agents):
 
         other_moves.add(result)
     return other_moves
+
+#added NatATL functions below
+
+def get_label(index):
+    return f's{index}'
+
+def create_label_matrix(graph):
+    label_matrix = []
+    for i, row in enumerate(graph):
+        label_row = [get_label(i) if isinstance(elem, str) and elem != '*' else None for elem in row]
+        label_matrix.append(label_row)
+    return label_matrix

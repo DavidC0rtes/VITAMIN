@@ -11,6 +11,7 @@ from back_end_CS import *
 import os
 from utilities.parser.ATL import *
 from utilities import *
+from logics.NatATL import *
 
 def display_case(nlp_steps):
 
@@ -667,7 +668,7 @@ def display_MS(ms_steps):
   else:
     filename = upload_file_handler()
     st.markdown('Logic Selection ')
-    Logic=st.selectbox('Select your logic',['ATL','ATLF','CTL','LTL','SL','CapATL', 'OL', 'OATL'])
+    Logic=st.selectbox('Select your logic',['ATL','ATLF','CTL','LTL','SL','CapATL', 'OL', 'OATL', 'NatATL'])
     st.write(f"    ")
     st.write(f"    ")
     formula=st.text_input('Write your formula',' ')
@@ -713,6 +714,9 @@ def display_MS(ms_steps):
         result  = OATL.model_checking(formula, filename)
         st.write(result['res'])
         st.write(result['initial_state'])
+      elif Logic == 'NatATL':
+        result = process_data(filename, formula)
+        st.write(result)
       elapsed_time = time.time() - start_time
       st.write("Execution time:", format_time(elapsed_time))
       start_time = None

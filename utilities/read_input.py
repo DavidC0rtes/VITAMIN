@@ -223,3 +223,74 @@ def get_cost_for_action(action, state):
     
 def get_cost_for_action_all():
     return cost_for_action
+
+#NatATL added functions below
+
+
+def get_actions(graph, agents):
+    # Convert the graph string to a list of lists
+    graph_list = graph
+
+    # Create a dictionary to store actions for each agent
+    actions_per_agent = {f"agent{agent}": [] for agent in agents}
+
+    for row in graph_list:
+        for elem in row:
+            if elem != 0 and elem != '*':
+                actions = elem.split(',')
+                for action in actions:
+                    for i, agent in enumerate(agents):
+                        if action[agent - 1] != 'I':  # idle condition
+                            actions_per_agent[f"agent{agent}"].append(action[agent - 1])
+
+    # Remove duplicates from each agent's action list
+    for agent_key in actions_per_agent:
+        actions_per_agent[agent_key] = list(set(actions_per_agent[agent_key]))
+
+    return actions_per_agent
+
+#return the number of actions extracted in get_actions()
+def get_number_of_actions ():
+
+    n = get_actions()
+    return len(n)
+
+def write_updated_file(input_filename, modified_graph, output_filename):
+    if modified_graph is None:
+        raise ValueError("modified_graph is None")
+    with open(input_filename, 'r') as input_file, open(output_filename, 'w') as output_file:
+        current_section = None
+        matrix_row = 0
+        for line in input_file:
+            line = line.strip()
+
+            if line == 'Transition':
+                current_section = 'Transition'
+                output_file.write(line + '\n')
+            elif current_section == 'Transition' and matrix_row < len(modified_graph):
+                output_file.write(' '.join([str(elem) for elem in modified_graph[matrix_row]]) + '\n')
+                matrix_row += 1
+            elif current_section == 'Transition' and matrix_row == len(modified_graph):
+                current_section = None
+                output_file.write('Unkown_Transition_by' + '\n')
+            else:
+                output_file.write(line + '\n')
+
+#returns the edges of a graph
+def get_edges():
+    graph = get_graph()
+    states = get_states()
+    #duplicate edges (double transactions from "a" to "b") are ignored due to model checking
+    edges = []
+    for i, row in enumerate(graph):
+        for j, element in enumerate(row):
+            if element == '*':
+                edges.append((states[i], states[i]))
+            elif element != 0:
+                edges.append((states[i], states[j]))
+    return edges
+
+def file_to_string(filename):
+    with open(filename, 'r') as file:
+        data = file.read()
+    return data
