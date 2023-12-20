@@ -1,7 +1,6 @@
 import re
 import ply.lex as lex
 import ply.yacc as yacc
-import streamlit
 
 # Token
 tokens = (
@@ -116,7 +115,7 @@ def get_lexer():
 # returns a tuple representing the formula divided into subformulas.
 def do_parsing(formula):
     try:
-        result = parser.parse(r'(<J3> G ((!r) | (r > (<J3> F a)))) & (<J5> (!r) W a)')
+        result = parser.parse(formula)
         return result
     except SyntaxError as e:  # if parser fails
         return None
