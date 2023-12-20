@@ -1,6 +1,7 @@
 import re
 import ply.lex as lex
 import ply.yacc as yacc
+import streamlit
 
 # Token
 tokens = (
@@ -117,7 +118,8 @@ def do_parsing(formula):
     try:
         result = parser.parse(formula)
         return result
-    except SyntaxError:  # if parser fails
+    except SyntaxError as e:  # if parser fails
+        streamlit.write(e)
         return None
     except DemonicValueError: # invalid cost
         return None
