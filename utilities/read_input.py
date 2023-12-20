@@ -10,10 +10,12 @@ capacities_assignment = []
 actions = []
 action_capacities = []
 capacities = []
-
+costs = []
+cost_for_action = {}
+usesCostsInsteadOfActions = False
 
 def read_file(filename):
-    global graph, states, atomic_propositions, matrix_prop, initial_state, number_of_agents, capacities_assignment, action_capacities, actions, capacities
+    global graph, states, atomic_propositions, matrix_prop, initial_state, number_of_agents, capacities_assignment, action_capacities, actions, capacities, cost_for_action
 
     with open(filename, 'r') as f:
         lines = f.readlines()
@@ -27,6 +29,7 @@ def read_file(filename):
     capacities_assignment = []
     action_capacities = []
     capacities = []
+    cost_for_action = {}
 
     current_section = None
     transition_content = ''
@@ -39,11 +42,17 @@ def read_file(filename):
     capacities_assignment_content = ''
     action_assign_content = ''
     capacities_content = ''
+    usesCostsInsteadOfActions = False
 
     for line in lines:
         line = line.strip()
+        #Section "header"
         if line == 'Transition':
             current_section = 'Transition'
+            useCostsInsteadOfActions = False
+        elif line == 'Transition_With_Costs':
+            current_section = 'Transition'
+            usesCostsInsteadOfActions = True
         elif line == 'Unkown_Transition_by':
             current_section = 'Unknown_Transition_by'
         elif line == 'Name_State':
@@ -62,8 +71,11 @@ def read_file(filename):
             current_section = 'Capacities_assignment'
         elif line == 'Actions_for_capacities':
             current_section = 'Actions_for_capacities'
+        elif line == 'Costs_for_actions':
+            current_section = 'Costs_for_actions'
 
-
+        #If not header, then read contents based on what section we are in
+        
         elif current_section == 'Transition':
             transition_content += line + '\n'
             values = line.strip().split()
@@ -98,7 +110,14 @@ def read_file(filename):
             action_assign_content += line + '\n'
             values = line.strip().split()
             action_capacities.append(values)
-            
+        elif current_section == "Costs_for_actions":
+            values = line.strip().split()
+            action_name = values[0]
+            state_and_cost_string = values[1].split(";")
+            for couple in state_and_cost_string:
+                state_and_cost = couple.split(",")
+                cost_for_action.update({translate_action_and_state_to_key(action_name, state_and_cost[0]): int(state_and_cost[1])})
+    
     actions =[]
     a = 0
     grafo_prov = np.array(rows_graph)
@@ -108,10 +127,13 @@ def read_file(filename):
             if item == '0':
                 new_row.append(0)
             else:
-                new_row.append(str(item))
-            a= item.split(",")
-            for elem in a :
-                actions.append(elem)
+                if (usesCostsInsteadOfActions):
+                    new_row.append(item)
+                else:
+                    new_row.append(str(item))
+                    a = item.split(",")
+                    for elem in a :
+                        actions.append(elem)
         graph.append(new_row)   
 
     matrix_prop_prov = np.array(rows_prop)
@@ -126,8 +148,20 @@ def read_file(filename):
                 new_row.append(str(item))
         matrix_prop.append(new_row)
 
-
-
+def read_from_model_object(model):
+    global graph, states, atomic_propositions, matrix_prop, initial_state, number_of_agents, capacities_assignment, action_capacities, actions, capacities
+    graph = model.transition_matrix
+    states = np.array(model.state_names)
+    atomic_propositions = np.array(model.propositions)
+    matrix_prop = model.labelling_function
+    initial_state = model.initial_state
+    number_of_agents = model.number_of_agents
+    capacities_assignment = model.capacities_assignment
+    actions_capacities = model.actions_for_capacities
+    actions = model.actions
+    capacities = np.array(model.capacities)
+    cost_for_action = model.cost_for_action
+    
 def get_graph():
     return graph
 
@@ -151,6 +185,9 @@ def get_number_of_agents():
 
 def get_actions():
     return actions
+    
+def get_costs():
+    return costs
 
 def get_capacities_assignment2():
     return capacities_assignment
@@ -178,5 +215,11 @@ def get_capacities():
         result.append(elem)
     return result
 
-
-
+def translate_action_and_state_to_key(action_string, state):
+    return action_string + ";" + state
+    
+def get_cost_for_action(action, state):
+    return cost_for_action[translate_action_and_state_to_key(action, state)]
+    
+def get_cost_for_action_all():
+    return cost_for_action

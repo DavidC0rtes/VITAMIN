@@ -71,6 +71,9 @@ def get_coalition_action(actions, agents):
     return coalition_moves
 
 
+def get_base_action(action, agents):
+    return get_coalition_action(set([action]), agents).pop()
+
 # returns all moves except for those of the considered coalition
 def get_opponent_moves(actions, agents):
     other_moves = set()
