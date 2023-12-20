@@ -116,8 +116,7 @@ def get_lexer():
 # returns a tuple representing the formula divided into subformulas.
 def do_parsing(formula):
     try:
-        result = parser.parse(formula)
-        streamlit.write(formula)
+        result = parser.parse('(<J3> G ((!r) | (r > (<J3> F a)))) & (<J5> (!r) W a)')
         return result
     except SyntaxError as e:  # if parser fails
         return None
