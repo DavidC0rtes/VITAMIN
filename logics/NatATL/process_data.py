@@ -1,8 +1,8 @@
 from logics.NatATL.strategies import initialize, generate_strategies
-from logics.NatATL import pruning
+from logics.NatATL.pruning import pruning
 import time
 
-def process_data(structure, formula, result):
+def process_data(structure, formula):
     # Start timer
     start_time = time.time()
     found_solution = False
