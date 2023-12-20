@@ -1,5 +1,5 @@
 from logics.NatATL.strategies import initialize, generate_strategies
-from pruning import pruning
+from logics.NatATL import pruning
 import time
 
 def process_data(structure, formula, result):
