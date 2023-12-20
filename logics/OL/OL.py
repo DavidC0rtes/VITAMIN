@@ -353,7 +353,7 @@ def solve_tree_adjacency_list(node):
 # does the parsing of the model, the formula, builds a tree and then it returns the result of model checking
 # function called by front_end_CS
 def model_checking(formula, filename):
-
+    
     build_pre_set_array()
     if not formula.strip():
         result = {'res': 'Error: formula not entered'}

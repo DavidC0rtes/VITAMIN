@@ -117,6 +117,7 @@ def get_lexer():
 def do_parsing(formula):
     try:
         result = parser.parse(formula)
+        streamlit.write(formula)
         return result
     except SyntaxError as e:  # if parser fails
         return None
