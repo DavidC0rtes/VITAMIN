@@ -115,10 +115,12 @@ def get_lexer():
 # given an ATL formula as input
 # returns a tuple representing the formula divided into subformulas.
 def do_parsing(formula):
+    streamlit.write('HERE!')
     try:
         result = parser.parse(formula)
         return result
     except SyntaxError as e:  # if parser fails
+        streamlit.write('HERE!')
         streamlit.write(e)
         return None
     except DemonicValueError: # invalid cost
