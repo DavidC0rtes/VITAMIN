@@ -2,16 +2,16 @@ import time
 
 import streamlit as st
 
-from logics.ATL import ATL
-from logics.ATLF import ATLF
-from logics.CapATL import CapATL
-from logics.OL import OL
-from logics.OATL import OATL
+# from logics.ATL import ATL
+# from logics.ATLF import ATLF
+# from logics.CapATL import CapATL
+# from logics.OL import OL
+# from logics.OATL import OATL
+# from logics.NatATL import *
 from back_end_CS import *
 import os
-from utilities.parser.ATL import *
 from utilities import *
-from logics.NatATL import *
+
 
 def display_case(nlp_steps):
 
@@ -680,42 +680,53 @@ def display_MS(ms_steps):
     st.write(str(list_pars))
     st.write(str(list_type))"""
 
-    read_input.read_file(filename) 
-    res_parsing = do_parsing(formula, read_input.get_number_of_agents())
+    # read_input.read_file(filename) 
+    # res_parsing = do_parsing(formula, read_input.get_number_of_agents())
 
-    if formula == '':
-      st.write("please enter a formula")
-    st.write("Valid formula: " +str(res_parsing))
-    st.write('Selected file: ' + str(filename))
-    with open(filename) as f:
-        # st.write('Content:')
-        content = f.read()
-        # st.write(content)
+    # if formula == '':
+    #   st.write("please enter a formula")
+    # st.write("Valid formula: " +str(res_parsing))
+    # st.write('Selected file: ' + str(filename))
+    # with open(filename) as f:
+    #     # st.write('Content:')
+    #     content = f.read()
+    #     # st.write(content)
     start_time = None
     if st.button('Next : To Model Checking'):
       start_time = time.time()
       if Logic == 'ATL':
+        from logics.ATL import ATL
         result = ATL.model_checking(formula, filename)
+        del ATL
         st.write(result['res'])
         st.write(result['initial_state'])
       elif Logic == 'CapATL':
+        from logics.CapATL import CapATL
         result = CapATL.model_checking(formula, filename)
+        del CapATL
         st.write(result)
         # st.write(result['initial_state'])
       elif Logic == 'ATLF':
+        from logics.ATLF import ATLF
         result  = ATLF.model_checking(formula, filename)
+        del ATLF
         st.write(result['res'])
         st.write(result['initial_state'])
       elif Logic == 'OL':
-        formula = '(<J3> G ((!r) | (r > (<J3> F a)))) & (<J5> (!r) W a)'
+        from logics.OL import OL
         result  = OL.model_checking(formula, filename)
+        del OL
         st.write(result['res'])
       elif Logic == 'OATL':
+        from logics.OATL import OATL
         result  = OATL.model_checking(formula, filename)
+        del OATL
         st.write(result['res'])
         st.write(result['initial_state'])
       elif Logic == 'NatATL':
+        from logics.NatATL import process_data
         result = process_data(filename, formula)
+        del process_data
         st.write(result)
       elapsed_time = time.time() - start_time
       st.write("Execution time:", format_time(elapsed_time))
