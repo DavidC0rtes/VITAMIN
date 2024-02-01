@@ -1,4 +1,4 @@
-from logics import OL
+from logics import RABATL
 
-result  = OL.model_checking('(<J3> G ((!r) | (r > (<J3> F a)))) & (<J5> (!r) W a)', './examples/OL/OL_model.txt')
+result  = RABATL.model_checking('(<1,2,3><1>F g)', './examples/RABATL/RABATL_model.txt')
 print(result)

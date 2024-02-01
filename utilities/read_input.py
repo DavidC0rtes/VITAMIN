@@ -73,6 +73,8 @@ def read_file(filename):
             current_section = 'Actions_for_capacities'
         elif line == 'Costs_for_actions':
             current_section = 'Costs_for_actions'
+        elif line == 'Costs_for_actions_split':
+            current_section = 'Costs_for_actions_split'
 
         #If not header, then read contents based on what section we are in
         
@@ -117,6 +119,14 @@ def read_file(filename):
             for couple in state_and_cost_string:
                 state_and_cost = couple.split(",")
                 cost_for_action.update({translate_action_and_state_to_key(action_name, state_and_cost[0]): int(state_and_cost[1])})
+        elif current_section == "Costs_for_actions_split":
+            values = line.strip().split()
+            action_name = values[0]
+            state_and_cost_string = values[1].split(";")
+            for couple in state_and_cost_string:
+                state_and_cost = couple.split(",")
+                costs = [int(c) for c in state_and_cost[1:]]
+                cost_for_action.update({translate_action_and_state_to_key(action_name, state_and_cost[0]): costs})
     
     actions =[]
     a = 0
