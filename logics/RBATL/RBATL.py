@@ -2,7 +2,7 @@ import sys
 from utilities.functions import *
 from binarytree import Node
 from utilities.read_input import *
-from utilities.parser.RABATL import *
+from utilities.parser.RBATL import *
 
 
 # returns the states where the proposition holds
@@ -73,25 +73,9 @@ def Cost(actions, state, coalition):
                 if action[int(i)-1] != action1[int(i)-1]:
                     break
             else:
-                costs = get_cost_for_action(action1, 's'+str(state))
-                max_action_aux = 0
-                for i in range(0, len(costs)): 
-                    if str(i) in coalition:
-                        max_action_aux += costs[i]
-                max_action = max(max_action_aux, max_action)
+                max_action = max(get_cost_for_action(action1, 's'+str(state)), max_action)
         total = min(max_action, total)
     return total
-
-
-# # Compute the cost of the actions (RABATL)
-# def Cost(actions, state, agents):
-#     total = 0
-#     for action in actions:
-#         costs = get_cost_for_action(action, 's'+str(state))
-        # for i in range(0, len(costs)): 
-        #     if str(i) in agents:
-        #         total += costs[i]
-#     return total
 
 # It returns the states from which the coalition has a strategy to enforce the next state to lie in state_set.
 # function used by the model checker.
