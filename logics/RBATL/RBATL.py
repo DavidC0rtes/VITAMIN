@@ -63,20 +63,28 @@ def build_tree(tpl):
             root = Node(str(states))
     return root
 
-# Compute the cost of the joint action (RBATL)
-def Cost(actions, state, coalition):
-    total = sys.maxsize
-    for action in actions:
-        max_action = 0
-        for action1 in actions:
-            for i in coalition:
-                if action[int(i)-1] != action1[int(i)-1]:
-                    break
-            else:
-                max_action = max(get_cost_for_action(action1, 's'+str(state)), max_action)
-        total = min(max_action, total)
-    return total
+# # Compute the cost of the joint action (RBATL)
+# def Cost(actions, state, coalition):
+#     total = sys.maxsize
+#     for action in actions:
+#         max_action = 0
+#         for action1 in actions:
+#             for i in coalition:
+#                 if action[int(i)-1] != action1[int(i)-1]:
+#                     break
+#             else:
+#                 max_action = max(get_cost_for_action(action1, 's'+str(state)), max_action)
+#         total = min(max_action, total)
+#     return total
 
+# Compute the cost of the joint action (RBATL)
+def goodActionsCost(actions, state, bound):
+    good_actions = set()
+    for action in actions:
+        if get_cost_for_action(action, 's'+str(state)) <= bound:
+            good_actions.add(action)
+    return good_actions
+        
 # It returns the states from which the coalition has a strategy to enforce the next state to lie in state_set.
 # function used by the model checker.
 def pre(coalition, state_set, bound):
@@ -89,10 +97,10 @@ def pre(coalition, state_set, bound):
         for j in state_set:
             if graph[i][j] != 0:
                 coordinates = str(i) + "," + str(j)
-                # verify the cost of the joint action ???? if cost(graph[i][j]) <= b #RB           cost(graph[i][j], i) <= b #RAB
                 actions_list = build_list(graph[i][j])
-                if Cost(actions_list, i, agents) <= bound:
-                    dict_state_action.update({coordinates: actions_list})
+                goodActions = goodActionsCost(actions_list, i, bound)
+                if goodActions:
+                    dict_state_action.update({coordinates: goodActions})
 
     # iterate over these states and check that my move is not present in any other state
     for key, value in dict_state_action.items():

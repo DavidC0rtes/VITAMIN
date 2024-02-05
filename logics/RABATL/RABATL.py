@@ -82,16 +82,18 @@ def Cost(actions, state, coalition):
         total = min(max_action, total)
     return total
 
-
-# # Compute the cost of the actions (RABATL)
-# def Cost(actions, state, agents):
-#     total = 0
-#     for action in actions:
-#         costs = get_cost_for_action(action, 's'+str(state))
-        # for i in range(0, len(costs)): 
-        #     if str(i) in agents:
-        #         total += costs[i]
-#     return total
+# Compute the cost of the joint action (RBATL)
+def goodActionsCost(actions, state, coalition, bound):
+    good_actions = set()
+    for action in actions:
+        costs = get_cost_for_action(action, 's'+str(state))
+        cost = 0
+        for i in range(0, len(costs)): 
+            if str(i) in coalition:
+                cost += costs[i]
+        if cost <= bound:
+            good_actions.add(action)
+    return good_actions
 
 # It returns the states from which the coalition has a strategy to enforce the next state to lie in state_set.
 # function used by the model checker.
@@ -107,8 +109,9 @@ def pre(coalition, state_set, bound):
                 coordinates = str(i) + "," + str(j)
                 # verify the cost of the joint action ???? if cost(graph[i][j]) <= b #RB           cost(graph[i][j], i) <= b #RAB
                 actions_list = build_list(graph[i][j])
-                if Cost(actions_list, i, agents) <= bound:
-                    dict_state_action.update({coordinates: actions_list})
+                goodActions = goodActionsCost(actions_list, i, agents, bound)
+                if goodActions:
+                    dict_state_action.update({coordinates: goodActions})
 
     # iterate over these states and check that my move is not present in any other state
     for key, value in dict_state_action.items():
