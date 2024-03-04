@@ -644,11 +644,11 @@ def display_MS(ms_steps):
     elif st.session_state.cmpt_model==2:
       D_action()
     elif st.session_state.cmpt_model==3:
-      st.session_state.mat_transi=[]
+      # st.session_state.mat_transi=[]
       Na=len(st.session_state.info_model[0][0])
       D_transition(Na-st.session_state.info_model[0][1]-1,Na)
     elif st.session_state.cmpt_model==4:
-      st.session_state.mat_transi=[]
+      # st.session_state.mat_transi=[]
       st.session_state.info_model[0][1]=len(st.session_state.info_model[0][0])
       D_printgraph()
     # elif st.session_state.cmpt_model==5:
@@ -657,7 +657,12 @@ def display_MS(ms_steps):
     elif st.session_state.cmpt_model==5:
       D_logic()
     elif st.session_state.cmpt_model==6:
-      pass
+      from logics.ATL import ATL
+      result = ATL.model_checking(st.session_state.info_model[5][1], 'data/tmp.txt')
+      del ATL
+      st.write(result['res'])
+      st.write(result['initial_state'])
+      
       #D_parser()
 
     st.markdown("---")
@@ -843,11 +848,50 @@ def D_printgraph():
   st.markdown('#### iii - Diagram: ')
   test=display_graph_MS(st.session_state.info_model[3],st.session_state.info_model[0][0],st.session_state.info_model[1])
   st.graphviz_chart(test)
+  
+  store(st.session_state.info_model[0][0], st.session_state.info_model[1], st.session_state.info_model[2], st.session_state.info_model[3], 'data/tmp.txt')
+  
   if st.button('Next : To Logic'):
     (st.session_state.info_model).append(test)
     st.session_state.cmpt_model=5
     st.experimental_rerun()
 
+def store(agents, states, actions, transitions, path):
+   with open(path, 'w') as file:
+      no_actions = '|'.join(['No Action' for i in range(0, len(agents))])
+      revised_transitions = ''
+      for tr in transitions:
+        for act in tr:
+           if act == no_actions:
+              revised_transitions += '0 '
+           else:
+              revised_transitions += act.replace('|', '') + ' '
+        revised_transitions += '\n'
+      revised_transitions = revised_transitions[:-1]
+      labels = ''
+      for i in range(0, len(states)):
+        for j in range(0, len(states)):
+          if i == j:
+            labels += '1 '
+          else:
+            labels += '0 '
+        labels += '\n'
+      labels = labels[:-1]
+      l_agents= len(agents)
+      file.write(f'''
+Transition
+{revised_transitions}
+Name_State
+{' '.join(states)}
+Initial_State
+s0
+Atomic_propositions
+{' '.join(states)}
+Labelling
+{labels}
+Number_of_agents
+{l_agents}
+''') 
 
 def D_logic():
   # st.header("Model Checking for MAS")
@@ -868,7 +912,7 @@ def D_logic():
   st.write(str(list_type))
   if st.button('Next : To Model Checking'):
     (st.session_state.info_model).append([Logic,formula])
-    st.session_state.cmpt_model=7
+    st.session_state.cmpt_model=6
     st.experimental_rerun()
 
 

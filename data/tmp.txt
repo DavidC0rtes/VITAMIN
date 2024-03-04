@@ -1,0 +1,15 @@
+
+Transition
+0 AB 
+0 0 
+Name_State
+s0 s1
+Initial_State
+s0
+Atomic_propositions
+s0 s1
+Labelling
+1 0 
+0 1 
+Number_of_agents
+2

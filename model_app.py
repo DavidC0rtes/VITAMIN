@@ -104,6 +104,8 @@ def main():
     #Useful Session State
     if 'info_model' not in st.session_state:
       st.session_state.info_model=[]
+    if 'mat_transi' not in st.session_state:
+      st.session_state.mat_transi=[]
     if 'cmpt_model' not in st.session_state:
       st.session_state.cmpt_model=0
     if 'page' not in st.session_state:

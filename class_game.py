@@ -83,6 +83,50 @@ class game:
     else:
       return self.label_node(f,list_label)
 
+
+  def store(self, path): 
+
+    with open(path) as file:
+      file.write('''
+Transition
+0 HH HM HL 0 0 0 0 0 0 0 0 0
+0 0 0 0 MM ML 0 0 0 0 0 0 0
+0 0 0 0 0 0 MH ML 0 0 0 0 0
+0 0 0 0 0 0 0 0 MH MM 0 0 0
+0 0 0 0 0 0 0 0 0 0 LL 0 0
+0 0 0 0 0 0 0 0 0 0 LM 0 0
+0 0 0 0 0 0 0 0 0 0 LL 0 0
+0 0 0 0 0 0 0 0 0 0 0 LH 0
+0 0 0 0 0 0 0 0 0 0 0 0 LM
+0 0 0 0 0 0 0 0 0 0 LH 0 0
+0 0 0 0 0 0 0 0 0 0 * 0 0
+0 0 0 0 0 0 0 0 0 0 0 * 0
+0 0 0 0 0 0 0 0 0 0 0 0 *
+{transitions}
+Name_State
+s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 tie winK winT
+Initial_State
+s0
+Atomic_propositions
+kingwin tianjiwin tie kingnotwin tianjinotwin
+Labelling
+0 0 0 1 1
+0 0 0 1 1
+0 0 0 1 1
+0 0 0 1 1
+0 0 0 1 1
+0 0 0 1 1
+0 0 0 1 1
+0 0 0 1 1
+0 0 0 1 1
+0 0 0 1 1
+0 0 1 1 1
+1 0 0 0 1
+0 1 0 1 0
+Number_of_agents
+2
+''')
+
   def load(self,path='example_train_controller.txt'):
     file=open(path, 'r', encoding = 'utf-8-sig')
     lines=file.readlines()

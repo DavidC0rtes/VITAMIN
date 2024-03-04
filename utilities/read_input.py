@@ -14,6 +14,7 @@ costs = []
 cost_for_action = {}
 usesCostsInsteadOfActions = False
 
+
 def read_file(filename):
     global graph, states, atomic_propositions, matrix_prop, initial_state, number_of_agents, capacities_assignment, action_capacities, actions, capacities, cost_for_action
 
