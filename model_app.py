@@ -36,9 +36,9 @@ def img_to_bytes(img_path):
 def display_page(page):
   if page==2:
     display_MCMAS()
-  elif page==3:
-    ms_steps = st.selectbox(' ', ['01 - Create MAS', '02 - Upload File'])
-    display_MS(ms_steps)
+  elif page==3 or page==4:
+    # ms_steps = st.selectbox(' ', ['01 - Create MAS', '02 - Upload File'])
+    display_MS(page)
   else:
     nlp_steps = st.selectbox(' ', ['01 - Initialization',
                                         '02 - Strategy Example', '03 - ICGS','04 - Dining Cryptographers',
@@ -112,17 +112,21 @@ def main():
       st.session_state.page=3
     st.sidebar.header("Dashboard")
     st.sidebar.markdown("---")
-    if st.sidebar.button('Model Cheking for MAS'):
+    st.sidebar.header("Who are you?")
+    if st.sidebar.button('Non-Expert User'):
       st.session_state.cmpt_model=0
       st.session_state.info_model=[]
       st.session_state.mat_transi=[]
       st.session_state.page=3
-    if st.sidebar.button('Case Studies'):
-      st.session_state.page=1
-    if st.sidebar.button('Parser'):
-      st.session_state.page=2
-      st.session_state.cmpt_model=-1
-      st.session_state.info_model_test=[]
+    if st.sidebar.button('Expert User'):
+      st.session_state.cmpt_model=0
+      st.session_state.info_model=[]
+      st.session_state.mat_transi=[]
+      st.session_state.page=4
+    # if st.sidebar.button('Parser'):
+    #   st.session_state.page=2
+    #   st.session_state.cmpt_model=-1
+    #   st.session_state.info_model_test=[]
 
     display_page(st.session_state.page)
 
@@ -137,7 +141,7 @@ if __name__=='__main__':
 
 st.markdown(" ")
 st.markdown("### ** 👨🏼‍💻 Developers and Researchers: **")
-st.image(['images/1.png', 'images/2.png', 'images/account.png'], width=110, caption=["Vadim Malvone", "Angelo Ferrando", "Giulia Luongo"])
+st.image(['images/1.png', 'images/2.png', 'images/giulia.jpeg'], width=110, caption=["Vadim Malvone", "Angelo Ferrando", "Giulia Luongo"])
 
 # st.image(images, width=250)
 # st.write('    ')

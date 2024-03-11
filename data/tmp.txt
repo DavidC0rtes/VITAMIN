@@ -1,7 +1,7 @@
 
 Transition
-0 AB 
-0 0 
+*No Action A* 
+No ActionB 0 
 Name_State
 s0 s1
 Initial_State

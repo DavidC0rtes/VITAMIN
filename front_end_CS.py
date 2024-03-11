@@ -635,8 +635,8 @@ def display_MCMAS():
 
 
 
-def display_MS(ms_steps):
-  if ms_steps == "01 - Create MAS":
+def display_MS(page):
+  if page == 3:
     if st.session_state.cmpt_model<=0:
       D_agent()
     elif st.session_state.cmpt_model==1:
