@@ -1,5 +1,5 @@
-from logics import RABATL
-from logics import RBATL
+from model_checker_interface import RABATL
+from model_checker_interface import RBATL
 import time
 
 start = time.time()

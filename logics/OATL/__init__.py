@@ -1,1 +1,1 @@
-from .OATL import *
+from .parser import *

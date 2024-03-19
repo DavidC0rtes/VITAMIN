@@ -36,7 +36,7 @@ def img_to_bytes(img_path):
 def display_page(page):
   if page==2:
     display_MCMAS()
-  elif page==3 or page==4:
+  elif page == 0 or page==3 or page==4 or page==5:
     # ms_steps = st.selectbox(' ', ['01 - Create MAS', '02 - Upload File'])
     display_MS(page)
   else:
@@ -112,21 +112,27 @@ def main():
       st.session_state.page=3
     st.sidebar.header("Dashboard")
     st.sidebar.markdown("---")
+    if st.sidebar.button("0 - Guide"):
+       st.session_state.page=0
+    st.sidebar.markdown("---")
+    st.sidebar.markdown("Formal Verification of MAS")
     st.sidebar.header("Who are you?")
-    if st.sidebar.button('Non-Expert User'):
+    if st.sidebar.button('1 - Non-Expert User'):
       st.session_state.cmpt_model=0
       st.session_state.info_model=[]
       st.session_state.mat_transi=[]
       st.session_state.page=3
-    if st.sidebar.button('Expert User'):
+    if st.sidebar.button('2 - Expert User'):
       st.session_state.cmpt_model=0
       st.session_state.info_model=[]
       st.session_state.mat_transi=[]
       st.session_state.page=4
-    # if st.sidebar.button('Parser'):
-    #   st.session_state.page=2
-    #   st.session_state.cmpt_model=-1
-    #   st.session_state.info_model_test=[]
+    st.sidebar.markdown("---")
+    st.sidebar.markdown("Formal Verification of Attack Graphs")
+    if st.sidebar.button('3 - Expert User'):
+      st.session_state.page=5
+      st.session_state.cmpt_model=-1
+      st.session_state.info_model_test=[]
 
     display_page(st.session_state.page)
 

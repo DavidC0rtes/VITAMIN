@@ -1,1 +1,1 @@
-from .RABATL import *
+from .parser import *

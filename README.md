@@ -1,7 +1,7 @@
 # VITAMIN
 
 VITAMIN is an open-source model checker tailored to the verification of Multi-Agent Systems (MAS). MAS descriptions are given by means of labelled transition systems.
-VITAMIN supports a set of specifications, including Computation Tree Logic (CTL), Alternating-time Temporal Logic (ATL) operators, and more. 
+VITAMIN supports a set of specifications, including Computation Tree Logic (CTL), Alternating-time Temporal Logic (ATL), and more. 
 
 The VITAMIN tool operates on Streamlit, an open-source app framework used for creating web apps. Thus, VITAMIN runs on all architectures (e.g., Linux, Mac, and Windows). 
 
@@ -16,7 +16,7 @@ The CGS consists of states of the MAS and transitions that are labeled with acti
 
 ## User guide
 
-VITAMIN can be accessed at the following link: https://vitamin.streamlit.app/
+<!-- VITAMIN can be accessed at the following link: https://vitamin.streamlit.app/ -->
 
 In the dashboard (on the left side), two options can be found:
 - Non-Expert User
@@ -94,9 +94,9 @@ In the models folder, all the Python scripts regarding the support of all the mo
 
 In case a developer wants to extend VITAMIN with a new model formalism, all that is needed is to add a corresponding folder inside the models folder. Inside such a folder then, the developers can implement -- as they prefer -- the parsers for the new models to be included in VITAMIN.
 
-### Model Checking component
+### Verification component
 
-In the model checking component folder, all the Python scripts to perform the actual verification of the logics and models supported in VITAMIN are present.
+In the verification component folder, all the Python scripts to perform the actual verification of the logics and models supported in VITAMIN are present.
 
 In case a developer wants to extend VITAMIN with a new verification mechanism, all that is needed is to add a corresponding folder inside the model checking component folder. Inside such a folder then, the developers can implement -- as they prefer -- the algorithms to achieve the verification of models against formulas.
 
@@ -104,16 +104,16 @@ Note that, the addition of a verification mechanism may not be tied to the addit
 
 ### How to integrate the modification in VITAMIN
 
+Here, the public repository containing the skeleton architecture of VITAMIN can be found: ....
+
 After the logics and models are added in VITAMIN, the last step is to make such logics and models available to end-users (both non-expert and expert ones). To do so, it is necessary to modify the front_end_CS.py Python script. Specifically, such modification requires the following.
 
 In the callback function attached to the 'Next : To Model Checking' button, the developer needs to add an additional case to handle the newly introduced logic in the corresponding dropdown menu.
 
-<!-- TO UPDATE after we do the SPLIT -->
-
 For example, the code to add would look like this:
 ```python
 elif Logic == 'NEWLOGIC':
-    from logics.NEWLOGIC import NEWLOGIC
+    from verification.NEWLOGIC import NEWLOGIC
     result  = NEWLOGIC.model_checking(formula, filename)
     del NEWLOGIC
     st.write(result['res'])

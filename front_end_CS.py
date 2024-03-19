@@ -10,7 +10,8 @@ import streamlit as st
 # from logics.NatATL import *
 from back_end_CS import *
 import os
-from utilities import *
+from models import *
+from pathlib import *
 
 
 def display_case(nlp_steps):
@@ -532,7 +533,42 @@ def upload_file_handler():
     visitor = YOUR_VISITOR_CLASS()
     print(visitor.visit(tree))"""
 
+def upload_xml_file_handler():
+  def file_select(folder='./xml_data'):
+      filelist=os.listdir(folder)
+      st.markdown("OR")
+      selectedfile=st.selectbox('Select a default dataset',filelist)
+      return os.path.join(folder,selectedfile)
 
+
+  st.markdown("---")
+  st.write(f"        ")
+
+  st.header('06 - Upload File')
+  st.write(f"        ")
+  st.write(f"        ")
+  st.markdown("Upload XML File with config")
+  st.button('Upload Data')
+  uploaded_file=st.file_uploader('Upload Dataset in .xml',type=['XML'])
+  s = None
+  filename = None
+  if uploaded_file is not None:
+    # st.write('hello world')
+    with open('xml_data/' + str(uploaded_file.name), 'w') as f:
+        # st.write(dir(uploaded_file))
+        data = uploaded_file.getvalue().decode('utf-8').splitlines()
+        # data = uploaded_file.getvalue().decode('utf-8').splitlines()
+        # st.write(bytes_data)
+        # st.write(data[1])
+        # st.write(type(data))
+        for line in data:
+            f.write(str(line) + '\n')
+  else:
+    filename=file_select()
+    st.info('You selected {}'.format(filename))
+    with open(str(filename), 'r') as f:
+      s = f.read()
+  return filename
 
 def parser(formula):
     change=[[' ',''],['||','|'],['&&','&'],['or', '|'],['and','&'],['implies','>'],['->','>'],['next','X'],['eventually','F'],['always','G']]
@@ -613,7 +649,7 @@ def display_MCMAS():
     st.write(f"    ")
     st.write(f"    ")
     st.markdown('Logic Selection ')
-    Logic=st.selectbox('Select your logic',['ATL','CTL','LTL','SL','CapATL', 'OL', 'OATL'])
+    Logic=st.selectbox('Select your logic',['ATL','CTL','LTL','SL','CapATL', 'OL', 'OATL', 'RBATL', 'RABATL'])
     st.write(f"    ")
     st.write(f"    ")
     formula=st.text_input('Write your formula',' ')
@@ -633,10 +669,14 @@ def display_MCMAS():
     pass
     #D_parser_test()
 
-
+def read_markdown_file(markdown_file):
+  return Path(markdown_file).read_text()
 
 def display_MS(page):
-  if page == 3:
+  if page == 0:
+    intro_markdown = read_markdown_file("./README.md") 
+    st.markdown(intro_markdown, unsafe_allow_html=True)
+  elif page == 3:
     if st.session_state.cmpt_model<=0:
       D_agent()
     elif st.session_state.cmpt_model==1:
@@ -657,7 +697,7 @@ def display_MS(page):
     elif st.session_state.cmpt_model==5:
       D_logic()
     elif st.session_state.cmpt_model==6:
-      from logics.ATL import ATL
+      from model_checker_interface.explicit.ATL import ATL
       result = ATL.model_checking(st.session_state.info_model[5][1], 'data/tmp.txt')
       del ATL
       st.write(result['res'])
@@ -670,10 +710,10 @@ def display_MS(page):
     st.header("Model design for User")
     st.write(f"    ")
     st.markdown("---")
-  else:
+  elif page==4:
     filename = upload_file_handler()
     st.markdown('Logic Selection ')
-    Logic=st.selectbox('Select your logic',['ATL','ATLF','CTL','LTL','SL','CapATL', 'OL', 'OATL', 'NatATL'])
+    Logic=st.selectbox('Select your logic',['ATL','ATLF','CTL','LTL','SL','CapATL', 'OL', 'OATL', 'NatATL', 'RBATL', 'RABATL'])
     st.write(f"    ")
     st.write(f"    ")
     formula=st.text_input('Write your formula',' ')
@@ -700,36 +740,48 @@ def display_MS(page):
     if st.button('Next : To Model Checking'):
       start_time = time.time()
       if Logic == 'ATL':
-        from logics.ATL import ATL
+        from model_checker_interface.explicit.ATL import ATL
         result = ATL.model_checking(formula, filename)
         del ATL
         st.write(result['res'])
         st.write(result['initial_state'])
       elif Logic == 'CapATL':
-        from logics.CapATL import CapATL
+        from model_checker_interface.explicit.CapATL import CapATL
         result = CapATL.model_checking(formula, filename)
         del CapATL
         st.write(result)
         # st.write(result['initial_state'])
       elif Logic == 'ATLF':
-        from logics.ATLF import ATLF
+        from model_checker_interface.explicit.ATLF import ATLF
         result  = ATLF.model_checking(formula, filename)
         del ATLF
         st.write(result['res'])
         st.write(result['initial_state'])
       elif Logic == 'OL':
-        from logics.OL import OL
+        from model_checker_interface.explicit.OL import OL
         result  = OL.model_checking(formula, filename)
         del OL
         st.write(result['res'])
       elif Logic == 'OATL':
-        from logics.OATL import OATL
+        from model_checker_interface.explicit.OATL import OATL
         result  = OATL.model_checking(formula, filename)
         del OATL
         st.write(result['res'])
         st.write(result['initial_state'])
+      elif Logic == 'RBATL':
+        from model_checker_interface.explicit.RBATL import RBATL
+        result  = RBATL.model_checking(formula, filename)
+        del RBATL
+        st.write(result['res'])
+        st.write(result['initial_state'])
+      elif Logic == 'RABATL':
+        from model_checker_interface.explicit.RABATL import RABATL
+        result  = RABATL.model_checking(formula, filename)
+        del RABATL
+        st.write(result['res'])
+        st.write(result['initial_state'])
       elif Logic == 'NatATL':
-        from logics.NatATL import process_data
+        from model_checker_interface.explicit.NatATL import process_data
         result = process_data(filename, formula)
         del process_data
         st.write(result)
@@ -743,6 +795,18 @@ def display_MS(page):
       (st.session_state.info_model).append([Logic,formula])
       st.session_state.cmpt_model=7
       #st.experimental_rerun()
+  else:
+      xml = upload_xml_file_handler()
+      # Clement part to produce xml
+      #      xml --> cgs
+      #          --> formula
+      cgs,formula = mapAttackGraphToCGS(xml)
+      if st.button('Next : To Model Checking'):
+        from model_checker_interface.explicit.ATL import ATL
+        result = ATL.model_checking(formula, cgs)
+        del ATL
+        st.write(result['res'])
+        st.write(result['initial_state'])
 
 
 def D_agent():
