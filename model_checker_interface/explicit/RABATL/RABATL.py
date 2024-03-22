@@ -62,7 +62,7 @@ def build_tree(tpl):
             root = Node(str(states))
     return root
 
-# Compute the cost of the joint action (RBATL)
+# Compute the cost of the joint action (RABATL)
 def Cost(actions, state, coalition):
     total = sys.maxsize
     for action in actions:
@@ -81,18 +81,27 @@ def Cost(actions, state, coalition):
         total = min(max_action, total)
     return total
 
-# Compute the cost of the joint action (RBATL)
+# Compute the cost of the joint action (RABATL)
 def goodActionsCost(actions, state, coalition, bound):
-    good_actions = set()
+    good_actions = []
     for action in actions:
         costs = cCGS.get_cost_for_action(action, 's'+str(state))
-        cost = 0
-        for i in range(0, len(costs)): 
-            if str(i) in coalition:
-                cost += costs[i]
-        if cost <= bound:
-            good_actions.add(action)
-    return good_actions
+        for j in range(0, len(bound)):
+            if j >= len(good_actions):
+                good_actions.append(set())
+            cost = 0
+            for i in range(0, len(costs[j])): 
+                if str(i) in coalition:
+                    cost += costs[j][i]
+            if cost <= bound[j]:
+                good_actions[j].add(action)
+    res = None
+    for gas in good_actions:
+        if res is None:
+            res = gas
+        else:
+            res.intersection_update(gas)
+    return res
 
 # It returns the states from which the coalition has a strategy to enforce the next state to lie in state_set.
 # function used by the model checker.
@@ -167,8 +176,22 @@ def pre(coalition, state_set, bound):
 def extract_coalition_and_cost(string):
     tmp = string[1:].split(">")
     coalition = tmp[0]
-    cost = tmp[1][1:]
+    cost = [int(i) for i in tmp[1][1:].split(',')]
     return (coalition, cost)
+
+def inc_bound(bound_p, bound):
+    for i in range(0, len(bound_p)):
+        if bound[i] == 0:
+            bound_p[i] = 0
+        else:
+            bound_p[i] = (bound_p[i]+1) % bound[i]
+        if bound_p[i] != 0:
+            break
+def diff_bound(bound1, bound2):
+    bound = [0]*len(bound1)
+    for i in range(0, len(bound1)):
+        bound[i] = bound1[i]-bound2[i]
+    return bound
 
 solve_tree_cache = dict()
 
@@ -195,31 +218,34 @@ def solve_tree(node):
             coalition = coalition_and_bound[0] # extract the coalition of agents
             bound = int(coalition_and_bound[1]) # extract the bound b assigned to the strategies
             states = string_to_set(node.left.value)
-            if bound == 0:
+            if not any(bound):
                 p = set(cCGS.get_states())
                 t = states
                 while p - t:  # p not in t
                     p = t
-                    t = pre(coalition, p, 0) & states
+                    t = pre(coalition, p, bound) & states
                 node.value = str(p)
             else:
                 p = set()
                 t = set()
                 value_backup = node.value
-                for bound_p in range(0, bound):
-                    node.value = value_backup[:value_backup[1:].index('<')+1] + '<' + str(bound_p) + '>G'
+                bound_p = [0]*len(bound)
+                while True:
+                    node.value = value_backup[:value_backup[1:].index('<')+1] + '<' + ','.join([str(b) for b in bound_p]) + '>G'
                     solve_tree(node)
-                    t = pre(coalition, string_to_set(node.value), bound-bound_p) & states
+                    t = pre(coalition, string_to_set(node.value), diff_bound(bound, bound_p)) & states
                     while p - t:  # p not in t
                         p.update(t)
-                        t = pre(coalition, p, 0) & states
+                        t = pre(coalition, p, [0]*len(bound)) & states
+                    inc_bound(bound_p, bound)
+                    if not any(bound_p): break
                 node.value = str(p)            
 
         elif verify('COALITION_BOUND', node.value) and verify('NEXT', node.value):  # e.g. <1>Xφ
             # coalition = node.value[1:-2]
             coalition_and_bound = extract_coalition_and_cost(node.value)
             coalition = coalition_and_bound[0] # extract the coalition of agents
-            bound = int(coalition_and_bound[1]) # extract the bound b assigned to the strategies
+            bound = coalition_and_bound[1] # extract the bound b assigned to the strategies
             states = string_to_set(node.left.value)
             ris = pre(coalition, states, bound)
             node.value = str(ris)
@@ -229,27 +255,30 @@ def solve_tree(node):
             # coalition = node.value[1:-2]
             coalition_and_bound = extract_coalition_and_cost(node.value)
             coalition = coalition_and_bound[0] # extract the coalition of agents
-            bound = int(coalition_and_bound[1]) # extract the bound b assigned to the strategies
+            bound = coalition_and_bound[1] # extract the bound b assigned to the strategies
             states1 = set(cCGS.get_states())
             states2 = string_to_set(node.left.value)
-            if bound == 0:
+            if not any(bound):
                 p = set()
                 t = states2
                 while t - p:  # t not in p
                     p.update(t)
-                    t = pre(coalition, p, 0) & states1
+                    t = pre(coalition, p, bound) & states1
                 node.value = str(p)
             else:
                 p = set()
                 t = set()
                 value_backup = node.value
-                for bound_p in range(0, bound):
-                    node.value = value_backup[:value_backup[1:].index('<')+1] + '<' + str(bound_p) + '>F'
+                bound_p = [0]*len(bound)
+                while True:
+                    node.value = value_backup[:value_backup[1:].index('<')+1] + '<' + ','.join([str(b) for b in bound_p]) + '>F'
                     solve_tree(node)
-                    t = pre(coalition, string_to_set(node.value), bound-bound_p) & states1
+                    t = pre(coalition, string_to_set(node.value), diff_bound(bound, bound_p)) & states1
                     while t - p:  # t not in p
                         p.update(t)
-                        t = pre(coalition, p, 0) & states1
+                        t = pre(coalition, p, [0]*len(bound)) & states1
+                    inc_bound(bound_p, bound)
+                    if not any(bound_p): break
                 node.value = str(p)
 
     if node.left is not None and node.right is not None:  # BINARY OPERATORS: or, and, until, implies
@@ -263,27 +292,30 @@ def solve_tree(node):
             # coalition = node.value[1:-2]
             coalition_and_bound = extract_coalition_and_cost(node.value)
             coalition = coalition_and_bound[0] # extract the coalition of agents
-            bound = int(coalition_and_bound[1]) # extract the bound b assigned to the strategies
+            bound = coalition_and_bound[1] # extract the bound b assigned to the strategies
             states1 = string_to_set(node.left.value)
             states2 = string_to_set(node.right.value)
-            if bound == 0:
+            if not any(bound):
                 p = set()
                 t = states2
                 while t - p:  # t not in p
                     p.update(t)
-                    t = pre(coalition, p, 0) & states1
+                    t = pre(coalition, p, bound) & states1
                 node.value = str(p)
             else:
                 p = set()
                 t = set()
                 value_backup = node.value
-                for bound_p in range(0, bound):
-                    node.value = value_backup[:value_backup[1:].index('<')+1] + '<' + str(bound_p) + '>U'
+                bound_p = [0]*len(bound)
+                while True:
+                    node.value = value_backup[:value_backup[1:].index('<')+1] + '<' + ','.join([str(b) for b in bound_p]) + '>U'
                     solve_tree(node)
-                    t = pre(coalition, string_to_set(node.value), bound-bound_p) & states1
+                    t = pre(coalition, string_to_set(node.value), diff_bound(bound, bound_p)) & states1
                     while t - p:  # t not in p
                         p.update(t)
-                        t = pre(coalition, p, 0) & states1
+                        t = pre(coalition, p, [0]*len(bound)) & states1
+                    inc_bound(bound_p, bound)
+                    if not any(bound_p): break
                 node.value = str(p)
             
         elif verify('AND', node.value):  # e.g. φ && θ

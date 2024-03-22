@@ -87,15 +87,17 @@ class costCGS(CGS):
                 action_name = values[0]
                 state_and_cost_string = values[1].split(";")
                 for couple in state_and_cost_string:
-                    state_and_cost = couple.split(",")
-                    self.cost_for_action.update({self.translate_action_and_state_to_key(action_name, state_and_cost[0]): int(state_and_cost[1])})
+                    state_and_cost = couple.split("$")
+                    costs = [int(c) for c in state_and_cost[1].split(':')]
+                    self.cost_for_action.update({self.translate_action_and_state_to_key(action_name, state_and_cost[0]): costs})
             elif current_section == "Costs_for_actions_split":
                 values = line.strip().split()
                 action_name = values[0]
                 state_and_cost_string = values[1].split(";")
                 for couple in state_and_cost_string:
-                    state_and_cost = couple.split(",")
-                    costs = [int(c) for c in state_and_cost[1:]]
+                    state_and_cost = couple.split("$")
+                    costs_res = state_and_cost[1].split(':')
+                    costs = [[int(cc) for cc in c.split(',')] for c in costs_res]
                     self.cost_for_action.update({self.translate_action_and_state_to_key(action_name, state_and_cost[0]): costs})
         
         actions =[]

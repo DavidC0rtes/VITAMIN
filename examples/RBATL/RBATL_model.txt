@@ -10,17 +10,17 @@ s0 s1 s2 s3 s4 s5
 Initial_State
 s0
 Costs_for_actions
-AA^ s0,1;s2,1
-AAR s0,2
-A^Q s0,2
-AR^ s0,3
-AAQ s2,2
-^^R s0,3
-^^Q s2,2
-*** s1,2
-*** s3,2
-*** s4,2
-*** s5,2
+AA^ s0$1:1;s2$1:1
+AAR s0$2:2
+A^Q s0$2:2
+AR^ s0$3:3
+AAQ s2$2:2
+^^R s0$3:3
+^^Q s2$2:2
+*** s1$2:2
+*** s3$2:2
+*** s4$2:2
+*** s5$2:2
 Atomic_propositions
 r s g h
 Labelling

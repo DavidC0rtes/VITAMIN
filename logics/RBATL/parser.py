@@ -41,7 +41,7 @@ t_EVENTUALLY = r'F|eventually'
 t_FALSE = r'\#|false'
 t_TRUE = r'\@|true'
 t_PROP = r'[a-z]+'
-t_COALITION_BOUND = r'<\d+(?:,\d+)*><[0-9]\d*>'
+t_COALITION_BOUND = r'<\d+(?:,\d+)*><\d+(?:,\d+)*>'
 
 
 # Token error handling
