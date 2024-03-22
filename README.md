@@ -94,11 +94,12 @@ In the models folder, all the Python scripts regarding the support of all the mo
 
 In case a developer wants to extend VITAMIN with a new model formalism, all that is needed is to add a corresponding folder inside the models folder. Inside such a folder then, the developers can implement -- as they prefer -- the parsers for the new models to be included in VITAMIN.
 
-### Verification component
+### Model Checker Interface component
 
-In the verification component folder, all the Python scripts to perform the actual verification of the logics and models supported in VITAMIN are present.
+In the model_checker_interface folder, all the Python scripts to perform the actual verification of the logics and models supported in VITAMIN are present.
 
-In case a developer wants to extend VITAMIN with a new verification mechanism, all that is needed is to add a corresponding folder inside the model checking component folder. Inside such a folder then, the developers can implement -- as they prefer -- the algorithms to achieve the verification of models against formulas.
+In case a developer wants to extend VITAMIN with a new verification mechanism, all that is needed is to add a corresponding folder inside the model_checker_interface folder. Inside such a folder then, the developers can implement -- as they prefer -- the algorithms to achieve the verification of models against formulas.
+Notice that, in this folder there is a directory for each verification approach. For example, directories for implicit, explicit, and abstract approaches can be found.
 
 Note that, the addition of a verification mechanism may not be tied to the addition of a corresponding new logic or model formalism. Indeed, new verification mechanisms can be added to handle existing logics and models in VITAMIN as well.
 
@@ -113,7 +114,7 @@ In the callback function attached to the 'Next : To Model Checking' button, the 
 For example, the code to add would look like this:
 ```python
 elif Logic == 'NEWLOGIC':
-    from verification.NEWLOGIC import NEWLOGIC
+    from model_checker_interface.NEWLOGIC import NEWLOGIC
     result  = NEWLOGIC.model_checking(formula, filename)
     del NEWLOGIC
     st.write(result['res'])
