@@ -196,7 +196,7 @@ def solve_tree(node):
         elif verify('COALITION_BOUND', node.value) and verify('GLOBALLY', node.value):  # e.g. <1>Gφ
             coalition_and_bound = extract_coalition_and_cost(node.value)
             coalition = coalition_and_bound[0] # extract the coalition of agents
-            bound = int(coalition_and_bound[1]) # extract the bound b assigned to the strategies
+            bound = coalition_and_bound[1] # extract the bound b assigned to the strategies
             states = string_to_set(node.left.value)
             if not any(bound):
                 p = set(cCGS.get_states())
