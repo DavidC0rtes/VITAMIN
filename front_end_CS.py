@@ -801,7 +801,7 @@ def display_MS(page):
       xml = upload_xml_file_handler()
       
       def mapAttackGraphToCGS(xml):
-        writting(xml, 'xml_data/cgs' 'xml_data/cond.txt', ['Cond 4'])
+        writting(xml, 'xml_data/cgs' './xml_data/cond.txt', ['Cond 4'])
         
         return cgs, '<Jn>G!goal'
         
@@ -1034,6 +1034,5 @@ def D_strategy(act_input,id_state1):
 def format_time(seconds):
   milliseconds = int(seconds * 1000) % 1000
   return f"{int(seconds):02d}.{milliseconds:03d}"
-
 
 
