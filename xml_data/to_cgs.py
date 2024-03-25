@@ -1,5 +1,5 @@
-from initialisation import *
-from set_operation import *
+from xml_data.initialisation import *
+from xml_data.set_operation import *
 
 #To suppress the space in a string, for vitamin interpretation
 def suppr_space(string):

@@ -1,4 +1,4 @@
-from convertion import *
+from xml_data.convertion import *
 
 #an attack must be identified by it's id, an is composed of :
 #An action

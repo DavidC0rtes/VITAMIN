@@ -1,4 +1,4 @@
-from to_cgs import *
+from xml_data.to_cgs import *
 
 #From an input file (.xml), a file of deactivable condition and a list of goals conditions this function output in the file "file" the txt file that will allow VITAMIN to compute and check the properties we need.
 def writting(input, file, file_cond, Objectif_attaque):
