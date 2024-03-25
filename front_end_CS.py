@@ -12,6 +12,8 @@ from back_end_CS import *
 import os
 from models import *
 from pathlib import *
+from xml_data import *
+from xml_data.writting import writting
 
 
 def display_case(nlp_steps):
@@ -797,6 +799,13 @@ def display_MS(page):
       #st.experimental_rerun()
   else:
       xml = upload_xml_file_handler()
+      
+      def mapAttackGraphToCGS(xml):
+        writting(xml, 'xml_data/cgs' 'xml_data/cond.txt', ['Cond 4'])
+        
+        return cgs, '<Jn>G!goal'
+        
+      
       # Clement part to produce xml
       #      xml --> cgs
       #          --> formula
