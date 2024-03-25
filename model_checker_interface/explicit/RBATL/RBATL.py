@@ -164,7 +164,7 @@ def inc_bound(bound_p, bound):
         if bound[i] == 0:
             bound_p[i] = 0
         else:
-            bound_p[i] = (bound_p[i]+1) % bound[i]
+            bound_p[i] = (bound_p[i]+1) % (bound[i]+1)
         if bound_p[i] != 0:
             break
 def diff_bound(bound1, bound2):
@@ -218,7 +218,7 @@ def solve_tree(node):
                         p.update(t)
                         t = pre(coalition, p, [0]*len(bound)) & states
                     inc_bound(bound_p, bound)
-                    if not any(bound_p): break
+                    if bound_p == bound: break
                 node.value = str(p)            
 
         elif verify('COALITION_BOUND', node.value) and verify('NEXT', node.value):  # e.g. <1>Xφ
@@ -258,7 +258,7 @@ def solve_tree(node):
                         p.update(t)
                         t = pre(coalition, p, [0]*len(bound)) & states1
                     inc_bound(bound_p, bound)
-                    if not any(bound_p): break
+                    if bound_p == bound: break
                 node.value = str(p)
 
     if node.left is not None and node.right is not None:  # BINARY OPERATORS: or, and, until, implies
@@ -295,7 +295,7 @@ def solve_tree(node):
                         p.update(t)
                         t = pre(coalition, p, [0]*len(bound)) & states1
                     inc_bound(bound_p, bound)
-                    if not any(bound_p): break
+                    if bound_p == bound: break
                 node.value = str(p)
             
         elif verify('AND', node.value):  # e.g. φ && θ
