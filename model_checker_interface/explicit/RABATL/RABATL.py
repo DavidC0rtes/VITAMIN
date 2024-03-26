@@ -91,7 +91,7 @@ def goodActionsCost(actions, state, coalition, bound):
                 good_actions.append(set())
             cost = 0
             for i in range(0, len(costs[j])): 
-                if str(i) in coalition:
+                if str(i+1) in coalition:
                     cost += costs[j][i]
             if cost <= bound[j]:
                 good_actions[j].add(action)
@@ -193,7 +193,7 @@ def diff_bound(bound1, bound2):
         bound[i] = bound1[i]-bound2[i]
     return bound
 
-solve_tree_cache = dict()
+
 
 # function that solves the formula tree. The result is the model checking result.
 # It solves every node depending on the operator.
@@ -345,7 +345,7 @@ def verify_initial_state(initial_state, string):
 # does the parsing of the model, the formula, builds a tree and then it returns the result of model checking
 # function called by front_end_CS
 def model_checking(formula, filename):
-    global cCGS
+    global cCGS, solve_tree_cache
 
     if not formula.strip():
         result = {'res': 'Error: formula not entered', 'initial_state': ''}
@@ -365,6 +365,7 @@ def model_checking(formula, filename):
         result = {'res': "Syntax Error: the atom does not exist", 'initial_state': ''}
         return result
 
+    solve_tree_cache = dict()
     # model checking
     solve_tree(root)
 
