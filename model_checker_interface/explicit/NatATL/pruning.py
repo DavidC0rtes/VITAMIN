@@ -1,4 +1,4 @@
-from model_checker_interface.NatATL.modelCheckingCTL import model_checking, process_modelCheckingCTL
+from model_checker_interface.explicit.NatATL.modelCheckingCTL import model_checking, process_modelCheckingCTL
 from models.CGS.CGS import *
 from logics.NatATL.matrixParser import matrixParser
 

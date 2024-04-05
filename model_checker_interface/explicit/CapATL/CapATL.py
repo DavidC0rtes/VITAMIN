@@ -1,13 +1,13 @@
 from itertools import combinations
-from model_checker_interface.CapATL.pre import *
+from model_checker_interface.explicit.CapATL.pre import *
 from logics.CapATL import *
-from model_checker_interface.CapATL.classes import *
+from model_checker_interface.explicit.CapATL.classes import *
 from models.capCGS import *
 
 from models.capCGS.capCGS import *
 import itertools
 from itertools import combinations, permutations
-from model_checker_interface.CapATL.classes import *
+from model_checker_interface.explicit.CapATL.classes import *
 
 ##########################################################
 # donne toutes le combinaisons de sous listes 

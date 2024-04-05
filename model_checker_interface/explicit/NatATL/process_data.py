@@ -1,5 +1,5 @@
-from model_checker_interface.NatATL.strategies import initialize, generate_strategies
-from model_checker_interface.NatATL.pruning import pruning
+from model_checker_interface.explicit.NatATL.strategies import initialize, generate_strategies
+from model_checker_interface.explicit.NatATL.pruning import pruning
 import time
 
 def process_data(structure, formula):

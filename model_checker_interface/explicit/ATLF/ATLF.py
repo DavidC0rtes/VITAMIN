@@ -1,4 +1,4 @@
-from model_checker_interface.ATLF.pre_ATLF import *
+from model_checker_interface.explicit.ATLF.pre_ATLF import *
 from binarytree import Node
 from logics.ATL import *
 from models.CGS import *

@@ -1,4 +1,4 @@
-from model_checker_interface.CapATL.CapATL import *
+from model_checker_interface.explicit.CapATL.CapATL import *
 
 # returns possible actions given a set of capacities i.e. [('c','c','c1'),('c', 'c', 'c2')]
 # it can corresponds to a knowledge delta
