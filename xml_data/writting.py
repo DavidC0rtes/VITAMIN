@@ -59,4 +59,4 @@ def writting(input, file, file_cond, Objectif_attaque):
     fichier.close()
     
 
-writting("test.xml", "test_output", "cond.txt", ['Cond 4'])
+writting("./xml_data/test.xml", "./xml_data/test_output", "./xml_data/cond.txt", ['Cond 4'])
