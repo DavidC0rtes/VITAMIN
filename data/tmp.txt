@@ -1,15 +1,13 @@
 
 Transition
-*No Action A* 
-No ActionB 0 
+0 
 Name_State
-s0 s1
+s0
 Initial_State
 s0
 Atomic_propositions
-s0 s1
+ap0
 Labelling
-1 0 
-0 1 
+1 
 Number_of_agents
-2
+1
