@@ -130,6 +130,9 @@ class CGS():
 
     def get_number_of_agents(self):
         return int(self.number_of_agents)
+    
+    def get_number_of_states(self):
+        return len(self.states)
 
     def get_actions(self):
         return self.actions
@@ -319,6 +322,65 @@ class CGS():
         return other_moves
 
     #added NatATL functions below
+
+    def update_cgs_file(self, input_file, modified_file, tree, tree_states, unwinded_CGS):
+        def read_input_file(file_path):
+            with open(file_path, 'r') as file:
+                lines = file.readlines()
+            return lines
+
+        def write_output_file(file_path, lines):
+            with open(file_path, 'w') as file:
+                file.writelines(lines)
+
+        def update_transitions(lines, new_transitions):
+            transition_start = lines.index("Transition\n") + 1
+            transition_end = lines.index("Unkown_Transition_by\n")
+            updated_lines = lines[:transition_start] + new_transitions + lines[transition_end:]
+            return updated_lines
+
+        def update_name_state(lines, states):
+            name_state_start = lines.index("Name_State\n") + 1
+            initial_state_index = lines.index("Initial_State\n")
+            states_line = " ".join(states) + "\n"
+            updated_lines = lines[:name_state_start] + [states_line] + lines[initial_state_index:]
+            return updated_lines
+
+        def update_labelling(lines, labelling):
+            labelling_start = lines.index("Labelling\n") + 1
+            num_agents_index = lines.index("Number_of_agents\n")
+            updated_lines = lines[:labelling_start] + labelling + lines[num_agents_index:]
+            return updated_lines
+
+        # Lettura del file di input
+        lines = read_input_file(input_file)
+
+        # Formattazione delle transizioni come richiesto
+        new_transitions = []
+        for row in unwinded_CGS:
+            new_transitions.append(" ".join(map(str, row)) + "\n")
+
+        # Aggiornamento delle transizioni nel file
+        lines = update_transitions(lines, new_transitions)
+
+        # Aggiornamento della lista degli stati nel file
+        lines = update_name_state(lines, tree_states)
+
+        # Creazione delle label rows dall'albero
+        labelling = []
+
+        def traverse_and_collect_labels(node):
+            labelling.append(" ".join(map(str, node.label_row)) + "\n")
+            for child in node.children:
+                traverse_and_collect_labels(child)
+
+        traverse_and_collect_labels(tree)
+
+        # Aggiornamento delle label rows nel file
+        lines = update_labelling(lines, labelling)
+
+        # Scrittura del file di output aggiornato
+        write_output_file(modified_file, lines)
 
     def get_label(self, index):
         return f's{index}'

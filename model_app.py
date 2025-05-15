@@ -36,7 +36,7 @@ def img_to_bytes(img_path):
 def display_page(page):
   if page==2:
     display_MCMAS()
-  elif page == 0 or page==3 or page==4 or page==5:
+  elif page == 0 or page==3 or page==4 or page==5 or page==6:
     # ms_steps = st.selectbox(' ', ['01 - Create MAS', '02 - Upload File'])
     display_MS(page)
   else:
@@ -129,6 +129,19 @@ def main():
       st.session_state.mat_transi=[]
       st.session_state.costs=[]
       st.session_state.page=4
+    # Nuova sezione per Concurrent Games
+    st.sidebar.markdown("---")
+    st.sidebar.markdown("Concurrent Games")
+    if st.sidebar.button('3 - SolutionConcepts'):
+        st.session_state.cmpt_model = 0
+        st.session_state.info_model = []
+        st.session_state.mat_transi = []
+        st.session_state.costs = []
+        st.session_state.page = 5
+    st.sidebar.markdown("---")
+    st.sidebar.markdown("From MulVAL to VITAMIN")
+    if st.sidebar.button("Convert"):
+       st.session_state.page=6
     # st.sidebar.markdown("---")
     # st.sidebar.markdown("Formal Verification of Attack Graphs")
     # if st.sidebar.button('3 - Expert User'):
@@ -149,7 +162,7 @@ if __name__=='__main__':
 
 st.markdown(" ")
 st.markdown("### ** 👨🏼‍💻 Developers and Researchers: **")
-st.image(['images/vadim.jpg', 'images/angelo.jpg', 'images/giulia.jpg', 'images/marco.jpg'], width=110, caption=["Vadim Malvone", "Angelo Ferrando", "Giulia Luongo", "Marco Aruta"])
+st.image(['images/vadim.jpg', 'images/angelo.jpg', 'images/giulia.jpg', 'images/marco.jpg', 'images/luca.png', 'images/clement.png'], width=110, caption=["Vadim Malvone", "Angelo Ferrando", "Giulia Luongo", "Marco Aruta", "Luca Malangone", "Clément Naves"])
 
 # st.image(images, width=250)
 # st.write('    ')
