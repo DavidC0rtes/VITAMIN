@@ -1,5 +1,6 @@
 import time
 from vitamin_model_checker.model_checker_interface.explicit.SolutionConcepts.Solution_Concepts import *
+from vitamin_model_checker.model_checker_interface.explicit.LTL.strategies import *
 
 #Non presente in Solution_Concepts perchè questo algoritmo stesso è sureWin
 def model_checking_sureWin(model, formula, k, agents):

@@ -914,7 +914,7 @@ def display_MS(page):
                             key=f"agent_choice_{i}")
       if scelta == "Yes":
         selected_agents.append(i)
-    st.write("Agenti selezionati:", selected_agents)
+    st.write("Selected Agents:", selected_agents)
 
     # Recupero delle azioni valide per ciascun agente selezionato
     agent_actions = cgs.get_actions(selected_agents)  # Dizionario tipo {'agent1': [...], 'agent2': [...], ...}
@@ -929,8 +929,8 @@ def display_MS(page):
     # --- SOLUTION CONCEPTS SELECTION ---
     if solution_concept == 'Is Not Nash':
       st.info(
-        "Per ciascun agente selezionato, inserisci le coppie condizione-azione, una per riga, seguendo il formato: condizione,azione")
-      st.markdown("**Esempio:** x_>_5, move_forward")
+        "For each selected agent, enter the condition-action pairs, one per line, following the format: condition,action.")
+      st.markdown("**Example:** x_>_5, move_forward")
 
       # Form per l'inserimento manuale
       natural_strategies_dict = {}  # Dizionario per raccogliere le strategie per ogni agente
@@ -938,12 +938,12 @@ def display_MS(page):
         for agent in selected_agents:
           st.markdown(f"#### Agente {agent}")
           st.markdown(
-            "Inserisci le coppie condizione,azione per l'agente **{}**. Ad es., per indicare che se la condizione x > 5 è vera, l'agente deve eseguire move_forward, inserisci:".format(
+            "Enter the condition,action pairs for agent **{}**. For example, to indicate that if the condition x > 5 is true, the agent should execute move_forward, enter:".format(
               agent))
           st.code("x > 5, move_forward", language='python')
-          input_str = st.text_area(f"Inserisci le coppie condizione,azione per l'agente {agent}:", key=f"nat_{agent}")
+          input_str = st.text_area(f"Enter the condition,action pairs for the agent{agent}:", key=f"nat_{agent}")
           natural_strategies_dict[agent] = input_str
-        manual_submitted = st.form_submit_button(label="Salva Strategie Naturali Manuali")
+        manual_submitted = st.form_submit_button(label="Save Manual Natural Strategies")
 
       if manual_submitted:
         parsed_strategies = {}
@@ -955,19 +955,19 @@ def display_MS(page):
             if line:
               parts = line.split(",")
               if len(parts) != 2:
-                st.error(f"Formato non valido per l'agente {agent}: '{line}'. Uso: condizione,azione")
+                st.error(f"Invalid format for the agent {agent}: '{line}'. Usage: condition,action")
                 error_found = True
               else:
                 cond = parts[0].strip()
                 act = parts[1].strip()
                 valid, err_msg = validate_condition(cond, k, atomic_propositions)
                 if not valid:
-                  st.error(f"Errore per l'agente {agent} nella condizione '{cond}': {err_msg}")
+                  st.error(f"Error for agent {agent} in condition '{cond}': {err_msg}")
                   error_found = True
                 else:
                   available_actions = agent_actions.get(f"agent{agent}", [])
                   if act not in available_actions:
-                    st.error(f"L'azione '{act}' per l'agente {agent} non è valida. Azioni valide: {available_actions}")
+                    st.error(f"The action '{act}' for agent {agent} is not valid. Valid actions are: {available_actions}")
                     error_found = True
                   else:
                     pairs.append((cond, act))
@@ -975,19 +975,19 @@ def display_MS(page):
 
         if not error_found:
           natural_strategies = [parsed_strategies[agent] for agent in sorted(parsed_strategies)]
-          st.success(f"Strategie naturali inserite correttamente: {natural_strategies}")
+          st.success(f"Natural strategies entered successfully: {natural_strategies}")
           st.write(natural_strategies)
           st.session_state['natural_strategies'] = natural_strategies
 
       # Pulsante per generare la strategia naturale randomica direttamente (senza iterare sul generatore)
-      if st.button('Genera Strategia Naturale Randomica'):
+      if st.button('Generate Random Natural Strategy'):
         natural_strategies = generate_single_strategy_random(selected_agents, k, agent_actions, atomic_propositions)
         if natural_strategies is not None:
-          st.success("Strategia naturale generata randomicamente:")
+          st.success("Randomly generated natural strategy:")
           st.write(natural_strategies)
           st.session_state['natural_strategies'] = natural_strategies
         else:
-          st.error("Non è stato possibile generare una strategia valida. Riprova con altri parametri.")
+          st.error("Unable to generate a valid strategy. Please try again with different parameters.")
 
     else:
       natural_strategies = None
