@@ -64,68 +64,67 @@ def build_tree(tpl):
 
 # It returns the states from which the coalition has a strategy to enforce the next state to lie in state_set.
 # function used by the model checker.
+from itertools import product
+
+
 def pre(coalition, state_set):
-    agents = cgs.get_agents_from_coalition(coalition)
-    graph = cgs.get_graph()
-    state_set = convert_state_set(state_set)  # returns a set of indexes
-    pre_states = set()
-    dict_state_action = dict()  # dictionary state-action
-    for i, source in enumerate(graph):  # take states that have at least one transition to one of the states in the set
-        for j in state_set:
-            if graph[i][j] != 0:
-                coordinates = str(i) + "," + str(j)
-                dict_state_action.update({coordinates: cgs.build_list(graph[i][j])})
+    """
+    Returns the set (of state names) from which the coalition coalition has a strategy to force the next transition into state_set.
+    
+        - coalition: a string like '1,2' or a list of agent indices
+        - state_set: a set of state names, e.g., {'s1', 's3'}
+    """
+    # 1) Indices of the target states
+    T_idx = convert_state_set(state_set)
 
-    # iterate over these states and check that my move is not present in any other state
-    for key, value in dict_state_action.items():
-        other_actions_in_row = dict()  # dictionary containing other moves of the row (excluding those saved in dict_state_action).
-        all_actions_in_row = set()  # all elements in the row
-        i = int(key.split(',')[0])
-        j = int(key.split(',')[1])
-        for index, element in enumerate(graph[i]):
-            if element != 0:
-                coordinates = str(i) + "," + str(index)
-                all_actions_in_row.update(cgs.build_list(graph[i][index]))
-                if index != j:
-                    other_actions_in_row.update({coordinates: cgs.build_list(graph[i][index])})
+    # 2) Agents in A and opposing agents
+    A = cgs.get_agents_from_coalition(coalition)  # es. [0,2]
+    all_agents = list(range(cgs.get_number_of_agents()))
+    NotA = [i for i in all_agents if i not in A]
 
-        # check if there is a loop -> if yes, it is a pre
-        for y in value:
-            if '*' in y:
-                pre_states.add(str(i))
+    graph = cgs.get_graph()  # |S|×|S| matrix, entry = bitmask of profiles
+    result = set()
+
+    # 3) For each q state ... 
+    for q in range(len(graph)):
+        # we gather all possible action profiles in q:
+        # joint_moves = [(profile, next_state_j), ...]
+        joint_moves = []
+        for j, mask in enumerate(graph[q]):
+            if mask != 0:
+                for prof in cgs.build_list(mask):
+                    joint_moves.append((prof, j))
+
+        # 4) group by A's move:
+        #   dict: mA_tuple -> [ (mo_tuple, j), ... ]
+        # where mo = opponents' move
+        moves_by_A = {}
+        for prof, j in joint_moves:
+            mA = tuple(sorted(cgs.get_coalition_action({prof}, A)))
+            mo = tuple(sorted(cgs.get_opponent_moves({prof}, A)))
+            moves_by_A.setdefault(mA, []).append((mo, j))
+
+        # 5) for each move of A, we try to validate it:
+        for mA, trans in moves_by_A.items():
+            # set of all possible counter-moves
+            opp_moves = {mo for mo, _ in trans}
+
+            good = True
+            # for each counter-move, we want ALL transitions to end up in T_idx
+            for o in opp_moves:
+                # all destination states j reachable with (mA, o)
+                destinazioni = [j for mo, j in trans if mo == o]
+                # if even a single destination is not in T_idx, mA fails
+                if not destinazioni or any(j not in T_idx for j in destinazioni):
+                    good = False
+                    break
+
+            if good:
+                # if we find at least one mA that "wins" against all o,
+                # then q ∈ Pre_A(T)
+                result.add(cgs.get_state_name_by_index(q))
                 break
 
-        for action in value:
-            move = cgs.get_coalition_action(set([action]), agents)
-            # checks whether a move is present in the others
-            check_passed = True
-            for k, v in other_actions_in_row.items():
-                other_act = cgs.get_coalition_action(v, agents)
-                if move.intersection(other_act): # they have something in common
-                    # check if it belongs to the set
-                    column = int(k.split(',')[1])
-                    if column not in state_set:
-                        check_passed = False
-            if check_passed == True:
-                pre_states.add(i)
-
-    # take the elements of the set and check if the moves towards the state contain all the possible opponent moves
-    result = set()
-    for i in pre_states:
-        i = int(i)
-        opponent_moves_in_state = set()
-        opponent_moves_in_row = set()
-        for j, column in enumerate(graph[int(i)]):
-            if graph[i][j] != 0:
-                opponent_moves_in_row.update(cgs.get_opponent_moves(cgs.build_list(graph[i][j]), agents))
-
-                if j in state_set:
-                    # takes the opponent's moves for actions towards the states in state_set
-                    opponent_moves_in_state.update(cgs.get_opponent_moves(cgs.build_list(graph[i][j]), agents))
-
-        if opponent_moves_in_row == opponent_moves_in_state:
-            # convert i into corresponding state
-            result.add(cgs.get_state_name_by_index(i))
     return result
 
 
@@ -241,5 +240,3 @@ def model_checking(formula, filename):
     bool_res = verify_initial_state(initial_state, root.value)
     result = {'res': 'Result: ' + str(root.value), 'initial_state': 'Initial state '+ str(initial_state) + ": " + str(bool_res)}
     return result
-
-
