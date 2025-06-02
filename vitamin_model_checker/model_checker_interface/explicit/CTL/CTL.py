@@ -290,7 +290,7 @@ def verify_initial_state(initial_state, result_str):
     """
     return str(initial_state) in result_str
 
-def model_checking(cgs, formula, filename):
+def model_checking(formula, filename):
     """
     Esegue il model checking per CTL:
       1. Legge il modello dal file
@@ -304,7 +304,9 @@ def model_checking(cgs, formula, filename):
         return result
 
     # Parsing del modello
+    cgs = CGS()
     cgs.read_file(filename)
+    print(cgs.get_graph())
     # Parsing della formula CTL
     res_parsing = do_parsingCTL(formula)
     if res_parsing is None:

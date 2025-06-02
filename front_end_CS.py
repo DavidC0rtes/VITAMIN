@@ -671,7 +671,7 @@ def display_MCMAS():
     if st.button('Next : To Parser'):
       (st.session_state.info_model_test).append([Logic,formula])
       st.session_state.cmpt_model=-2
-      st.experimental_rerun()
+      st.rerun()
   if st.session_state.cmpt_model==-2:
     pass
     #D_parser_test()
@@ -849,7 +849,7 @@ def display_MS(page):
       # model_checking(formula, content)
       (st.session_state.info_model).append([Logic,formula])
       st.session_state.cmpt_model=7
-      #st.experimental_rerun()
+      #st.rerun()
   elif page==6:
     file = st.file_uploader('graph to translate', "xml", False, help = "The xml file describing the Mulval graph you want to translate into a Vitamin file")
     choosing_conditions = st.toggle("Chosing deactivable condition")
@@ -1030,7 +1030,7 @@ def D_agent():
     (st.session_state.info_model).append([List_name_agent,len(List_name_agent)-1])
     st.session_state.cmpt_model=1
     print(st.session_state.info_model[0])
-    st.experimental_rerun()
+    st.rerun()
 
 
 def D_state():
@@ -1044,7 +1044,7 @@ def D_state():
   if st.button('Next : To Atoms'):
     (st.session_state.info_model).append(List_name_state)
     st.session_state.cmpt_model=2
-    st.experimental_rerun()
+    st.rerun()
 
 def D_atoms():
   NS=st.selectbox('Number of Atoms',[str(i) for i in range(1, 25)])
@@ -1057,7 +1057,7 @@ def D_atoms():
   if st.button('Next : To State-Atoms'):
     st.session_state.info_model.append(List_name_atoms)
     st.session_state.cmpt_model=3
-    st.experimental_rerun()
+    st.rerun()
 
 def D_state_atoms():
   st.write('For each state')
@@ -1072,7 +1072,7 @@ def D_state_atoms():
   if st.button('Next : To Resources'):
     st.session_state.info_model.append(atoms)
     st.session_state.cmpt_model=4
-    st.experimental_rerun()
+    st.rerun()
 
 def D_resource():
   NS=st.selectbox('Number of Resources',[str(i) for i in range(0, 11)])
@@ -1085,7 +1085,7 @@ def D_resource():
   if st.button('Next : To Actions'):
     (st.session_state.info_model).append(List_name_res)
     st.session_state.cmpt_model=5
-    st.experimental_rerun()
+    st.rerun()
 
 def D_action():
   Nact=st.selectbox('Number of Action',[str(i) for i in range(1, 25)])
@@ -1099,7 +1099,7 @@ def D_action():
   if st.button('Next : To Transitions'):
     (st.session_state.info_model).append(List_name_action)
     st.session_state.cmpt_model=6
-    st.experimental_rerun()
+    st.rerun()
 
 
 def D_transition(act_input,Na):
@@ -1122,21 +1122,21 @@ def D_transition(act_input,Na):
       st.session_state.info_model[0][1]+=(-1)
       (st.session_state.mat_transi).append(Mat_transition)
       st.session_state.cmpt_model=6
-      st.experimental_rerun()
+      st.rerun()
   else:
     if st.session_state.info_model[4]:
       if st.button('Next : To Cost'):
         (st.session_state.mat_transi).append(Mat_transition)
         st.session_state.cmpt_model=7
         Mat_to_Label()
-        st.experimental_rerun()
+        st.rerun()
     else:
       if st.button('Next : To Graph'):
         (st.session_state.mat_transi).append(Mat_transition)
         st.session_state.cmpt_model=8
         Mat_to_Label()
         st.session_state.info_model.append([])
-        st.experimental_rerun()
+        st.rerun()
 
 def D_cost():
   st.write('Add the costs for the actions')
@@ -1165,7 +1165,7 @@ def D_cost():
     st.session_state.info_model.append(Costs)
     st.session_state.cmpt_model=8
     # Mat_to_Label()
-    st.experimental_rerun()
+    st.rerun()
 
 def Mat_to_Label():
   def concat(list_str):
@@ -1202,7 +1202,7 @@ def D_printgraph():
   if st.button('Next : To Logic'):
     (st.session_state.info_model).append(test)
     st.session_state.cmpt_model=9
-    st.experimental_rerun()
+    st.rerun()
 
 def store(agents, states, atoms, labelling, costs, actions, transitions, path):
    with open(path, 'w') as file:
@@ -1275,7 +1275,7 @@ def D_logic():
   if st.button('Next : To Model Checking'):
     (st.session_state.info_model).append([Logic,formula])
     st.session_state.cmpt_model=10
-    st.experimental_rerun()
+    st.rerun()
 
 
 #def D_parser():
@@ -1308,14 +1308,14 @@ def D_strategy(act_input,id_state1):
       st.session_state.info_model[0][1]+=(-1)
       (st.session_state.mat_transi).append(List_strategy)
       st.session_state.cmpt_model=6
-      st.experimental_rerun()
+      st.rerun()
   else:
     if st.button('Next : To Logic'):
       (st.session_state.mat_transi).append(List_strategy)
       st.session_state.cmpt_model=7
       st.session_state.info_model.append(st.session_state.mat_transi)
       print(st.session_state.info_model)
-      st.experimental_rerun()
+      st.rerun()
 
 
 
